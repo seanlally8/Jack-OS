@@ -1,0 +1,176 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Math.jack
+/**
+ *  A library of commonly used mathematical functions.
+ *  All functions runs in O(n), where n is the number of bits used
+ *  for representing a two's complement integer value (16 in the Hack computer). 
+ *  Note: Jack compilers implement multiplication and division
+ *  using calls to OS functions in this class.
+ */
+class Math {
+    static int n, remainder;             // Number of bits used for representing a two's complement integer
+    static Array powersOfTwo; // Stores 2^0, 2^1, 2^2,..., 2^(n-1)
+
+    // Initializes the Math library.
+    function void init() {
+
+      var int i, value;
+      let remainder = 0;
+      let i = 0;
+      let value = 1;
+      let powersOfTwo = Array.new(16);
+
+      while (i < 16) {
+        let powersOfTwo[i] = value;
+        let value = value + value;
+        let i = i + 1;
+      }
+
+      return;
+    }
+
+    /** Returns the product of x and y. 
+     *  When a Jack compiler detects the multiplication operator '*'
+     *  in an expression, it handles it by invoking this method. 
+     *  Thus, in Jack, x * y and Math.multiply(x,y) return the same value. */
+    function int multiply(int x, int y) {
+      var int current_bit, shiftedx;
+      var int sum, i;
+      let i = 0;
+      let sum = 0;
+      let shiftedx = Math.abs(x);
+
+      while (i < 16) {
+        let current_bit = Math.bit(y, i);
+        if (current_bit = 0) {
+          let shiftedx = shiftedx + shiftedx;
+        }
+        else {
+          let sum = sum + shiftedx;
+          let shiftedx = shiftedx + shiftedx;
+        }
+        let i = i + 1;
+      }
+      if ((x < 0 & y > 0) | (x > 0 & y < 0)) {
+        return -sum;
+      }
+      return sum;
+    }
+
+    /** Returns the integer part of x / y.
+     *  When a Jack compiler detects the division operator '/'
+     *  an an expression, it handles it by invoking this method.
+     *  Thus, x/y and Math.divide(x,y) return the same value. */
+    function int divide(int x, int y) {
+      var int ax, ay, q;
+      let ax = Math.abs(x);
+      let ay = Math.abs(y);
+      if (ay > ax) {
+        return 0;
+      }
+      let q = Math.divide(ax, ay + ay);
+      if (((ax - (2 * ay * q)) < ay) & ((x < 0 & y > 0) | (x > 0 & y < 0))) {
+        return -(q + q);
+      }
+      if (((ax - (2 * ay * q)) < ay) & (x > 0 & y > 0)) {
+        return q + q;
+      }
+      if (((ax - (2 * ay * q)) > ay) & ((x < 0 & y > 0) | (x > 0 & y < 0))) {
+        return -(q + q + 1);
+      }
+      else {
+        return q + q + 1;
+      }
+    }
+
+    /** Returns the integer part of the square root of x. */
+    function int sqrt(int x) {
+      var int exit, upper, lower, result, squr;
+
+      let exit = 1;
+      let upper = x;
+      if (x > 182) {
+        let upper = 182;
+      }
+      let lower = 0;
+      let result = 0;
+      let squr = 0;
+      do Output.printInt(upper);
+
+      while (exit = 1) {
+        let result = (upper + lower) / 2;
+        let squr = result * result;
+        if (~(squr > x) & ~((upper - result) > 1)) {
+          let exit = 0;
+        }
+        if (squr > x) {
+          let upper = result;
+        }
+        if ((squr < x) & ((upper - result) > 1)) {
+          let lower = result;
+        }
+      }
+      do Output.println();
+      do Output.printInt(result);
+      do Output.println();
+      return result;
+
+    }
+
+    /** Returns the greater value. */
+    function int max(int a, int b) {
+      if (a > b) {
+        return a;
+      }
+      else {
+        return b;
+      }
+    }
+
+    /** Returns the smaller value. */
+    function int min(int a, int b) {
+      if (a < b) {
+        return a;
+      }
+      else {
+        return b;
+      }
+    }
+
+    /** Returns the absolute value of x. */
+    function int abs(int x) {
+      if (x < 0) {
+        return -x;
+      }
+      else {
+        return x;
+      }
+    }
+
+    /** Helper Functions */
+    function int bit(int x, int i) {
+      var int bit_tracker, x_tracker, m;
+      let bit_tracker = 0;
+      let x_tracker = Math.abs(x);
+
+      let m = 14;
+
+      while (~(m < i)) {
+        if (~(powersOfTwo[m] > x_tracker)) {
+          let bit_tracker = 1;
+          let x_tracker = x_tracker - powersOfTwo[m];
+        }
+        else {
+          let bit_tracker = 0;
+        }
+        let m = m - 1;
+      }
+      return bit_tracker;
+    }
+
+    function int getRemainder() {
+      return remainder;
+    }
+}

@@ -1,0 +1,418 @@
+function Math.init 2
+	push constant 0
+	pop static 1
+	push constant 0
+	pop local 0
+	push constant 1
+	pop local 1
+	push constant 16
+	call Array.new 1
+	pop static 2
+label L1
+	push local 0
+	push constant 16
+	lt
+	not
+	if-goto L2
+	push static 2
+	push local 0
+	add
+	pop temp 1
+	push local 1
+	push temp 1
+	pop pointer 1
+	pop that 0
+	push local 1
+	push local 1
+	add
+	pop local 1
+	push local 0
+	push constant 1
+	add
+	pop local 0
+	goto L1
+label L2
+	push constant 0
+	return
+function Math.multiply 4
+	push constant 0
+	pop local 3
+	push constant 0
+	pop local 2
+	push argument 0
+	call Math.abs 1
+	pop local 1
+label L3
+	push local 3
+	push constant 16
+	lt
+	not
+	if-goto L4
+	push argument 1
+	push local 3
+	call Math.bit 2
+	pop local 0
+	push local 0
+	push constant 0
+	eq
+	not
+	if-goto L5
+	push local 1
+	push local 1
+	add
+	pop local 1
+	goto L6
+label L5
+	push local 2
+	push local 1
+	add
+	pop local 2
+	push local 1
+	push local 1
+	add
+	pop local 1
+label L6
+	push local 3
+	push constant 1
+	add
+	pop local 3
+	goto L3
+label L4
+	push argument 0
+	push constant 0
+	lt
+	push argument 1
+	and
+	push constant 0
+	gt
+	push argument 0
+	push constant 0
+	gt
+	push argument 1
+	and
+	push constant 0
+	lt
+	or
+	not
+	if-goto L7
+	push local 2
+	neg
+	return
+	goto L8
+label L7
+label L8
+	push local 2
+	return
+function Math.divide 3
+	push argument 0
+	call Math.abs 1
+	pop local 0
+	push argument 1
+	call Math.abs 1
+	pop local 1
+	push local 1
+	push local 0
+	gt
+	not
+	if-goto L9
+	push constant 0
+	return
+	goto L10
+label L9
+label L10
+	push local 0
+	push local 1
+	push local 1
+	add
+	call Math.divide 2
+	pop local 2
+	push local 0
+	push constant 2
+	push local 1
+	call Math.multiply 2
+	push local 2
+	call Math.multiply 2
+	sub
+	push local 1
+	lt
+	push argument 0
+	push constant 0
+	lt
+	push argument 1
+	and
+	push constant 0
+	gt
+	push argument 0
+	push constant 0
+	gt
+	push argument 1
+	and
+	push constant 0
+	lt
+	or
+	and
+	not
+	if-goto L11
+	push local 2
+	push local 2
+	add
+	neg
+	return
+	goto L12
+label L11
+label L12
+	push local 0
+	push constant 2
+	push local 1
+	call Math.multiply 2
+	push local 2
+	call Math.multiply 2
+	sub
+	push local 1
+	lt
+	push argument 0
+	push constant 0
+	gt
+	push argument 1
+	and
+	push constant 0
+	gt
+	and
+	not
+	if-goto L13
+	push local 2
+	push local 2
+	add
+	return
+	goto L14
+label L13
+label L14
+	push local 0
+	push constant 2
+	push local 1
+	call Math.multiply 2
+	push local 2
+	call Math.multiply 2
+	sub
+	push local 1
+	gt
+	push argument 0
+	push constant 0
+	lt
+	push argument 1
+	and
+	push constant 0
+	gt
+	push argument 0
+	push constant 0
+	gt
+	push argument 1
+	and
+	push constant 0
+	lt
+	or
+	and
+	not
+	if-goto L15
+	push local 2
+	push local 2
+	add
+	push constant 1
+	add
+	neg
+	return
+	goto L16
+label L15
+	push local 2
+	push local 2
+	add
+	push constant 1
+	add
+	return
+label L16
+function Math.sqrt 5
+	push constant 1
+	pop local 0
+	push argument 0
+	pop local 1
+	push argument 0
+	push constant 182
+	gt
+	not
+	if-goto L17
+	push constant 182
+	pop local 1
+	goto L18
+label L17
+label L18
+	push constant 0
+	pop local 2
+	push constant 0
+	pop local 3
+	push constant 0
+	pop local 4
+	push local 1
+	call Output.printInt 1
+	pop temp 0
+label L19
+	push local 0
+	push constant 1
+	eq
+	not
+	if-goto L20
+	push local 1
+	push local 2
+	add
+	push constant 2
+	call Math.divide 2
+	pop local 3
+	push local 3
+	push local 3
+	call Math.multiply 2
+	pop local 4
+	push local 4
+	push argument 0
+	gt
+	not
+	push local 1
+	push local 3
+	sub
+	push constant 1
+	gt
+	not
+	and
+	not
+	if-goto L21
+	push constant 0
+	pop local 0
+	goto L22
+label L21
+label L22
+	push local 4
+	push argument 0
+	gt
+	not
+	if-goto L23
+	push local 3
+	pop local 1
+	goto L24
+label L23
+label L24
+	push local 4
+	push argument 0
+	lt
+	push local 1
+	push local 3
+	sub
+	push constant 1
+	gt
+	and
+	not
+	if-goto L25
+	push local 3
+	pop local 2
+	goto L26
+label L25
+label L26
+	goto L19
+label L20
+	call Output.println 0
+	pop temp 0
+	push local 3
+	call Output.printInt 1
+	pop temp 0
+	call Output.println 0
+	pop temp 0
+	push local 3
+	return
+function Math.max 0
+	push argument 0
+	push argument 1
+	gt
+	not
+	if-goto L27
+	push argument 0
+	return
+	goto L28
+label L27
+	push argument 1
+	return
+label L28
+function Math.min 0
+	push argument 0
+	push argument 1
+	lt
+	not
+	if-goto L29
+	push argument 0
+	return
+	goto L30
+label L29
+	push argument 1
+	return
+label L30
+function Math.abs 0
+	push argument 0
+	push constant 0
+	lt
+	not
+	if-goto L31
+	push argument 0
+	neg
+	return
+	goto L32
+label L31
+	push argument 0
+	return
+label L32
+function Math.bit 3
+	push constant 0
+	pop local 0
+	push argument 0
+	call Math.abs 1
+	pop local 1
+	push constant 14
+	pop local 2
+label L33
+	push local 2
+	push argument 1
+	lt
+	not
+	not
+	if-goto L34
+	push static 2
+	push local 2
+	add
+	pop pointer 1
+	push that 0
+	push local 1
+	gt
+	not
+	not
+	if-goto L35
+	push constant 1
+	pop local 0
+	push local 1
+	push static 2
+	push local 2
+	add
+	pop pointer 1
+	push that 0
+	sub
+	pop local 1
+	goto L36
+label L35
+	push constant 0
+	pop local 0
+label L36
+	push local 2
+	push constant 1
+	sub
+	pop local 2
+	goto L33
+label L34
+	push local 0
+	return
+function Math.getRemainder 0
+	push static 1
+	return

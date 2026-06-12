@@ -1,0 +1,225 @@
+function Memory.init 0
+	push constant 2048
+	pop static 2
+	push static 2
+	pop static 0
+	push constant 14334
+	pop static 1
+	push static 0
+	push constant 0
+	add
+	pop temp 1
+	push static 1
+	push temp 1
+	pop pointer 1
+	pop that 0
+	push static 0
+	push constant 1
+	add
+	pop temp 1
+	push constant 0
+	push temp 1
+	pop pointer 1
+	pop that 0
+	push constant 0
+	return
+function Memory.peek 1
+	push constant 0
+	pop local 0
+	push local 0
+	push argument 0
+	add
+	pop pointer 1
+	push that 0
+	return
+function Memory.poke 1
+	push constant 0
+	pop local 0
+	push local 0
+	push argument 0
+	add
+	pop temp 1
+	push argument 1
+	push temp 1
+	pop pointer 1
+	pop that 0
+	push constant 0
+	return
+function Memory.alloc 7
+	push constant 0
+	pop local 0
+	push constant 0
+	pop local 2
+	push static 0
+	pop local 3
+	push static 1
+	push constant 1
+	add
+	pop local 1
+	push static 0
+	pop local 4
+label L9
+	push local 3
+	push constant 0
+	eq
+	not
+	not
+	if-goto L10
+	push local 3
+	push constant 0
+	add
+	pop pointer 1
+	push that 0
+	call Output.printInt 1
+	pop temp 0
+	call Output.println 0
+	pop temp 0
+	push local 3
+	push constant 0
+	add
+	pop pointer 1
+	push that 0
+	push argument 0
+	push constant 1
+	add
+	lt
+	not
+	push local 3
+	push constant 0
+	add
+	pop pointer 1
+	push that 0
+	push local 1
+	lt
+	and
+	not
+	if-goto L11
+	push local 4
+	pop local 6
+	push local 3
+	pop local 5
+	push local 3
+	push constant 0
+	add
+	pop pointer 1
+	push that 0
+	pop local 1
+	goto L12
+label L11
+label L12
+	push local 3
+	pop local 4
+	push local 3
+	push constant 1
+	add
+	pop pointer 1
+	push that 0
+	pop local 3
+	goto L9
+label L10
+	push local 5
+	push local 5
+	push constant 0
+	add
+	pop pointer 1
+	push that 0
+	push constant 2
+	add
+	push argument 0
+	sub
+	add
+	pop local 2
+	push local 2
+	push constant 1
+	neg
+	add
+	pop temp 1
+	push argument 0
+	push temp 1
+	pop pointer 1
+	pop that 0
+	push local 5
+	push constant 0
+	add
+	pop temp 1
+	push local 5
+	push constant 0
+	add
+	pop pointer 1
+	push that 0
+	push argument 0
+	push constant 1
+	add
+	sub
+	push temp 1
+	pop pointer 1
+	pop that 0
+	push local 3
+	call Output.printInt 1
+	pop temp 0
+	call Output.println 0
+	pop temp 0
+	push local 2
+	call Output.printInt 1
+	pop temp 0
+	call Output.println 0
+	pop temp 0
+	push argument 0
+	call Output.printInt 1
+	pop temp 0
+	call Output.println 0
+	pop temp 0
+	call Output.println 0
+	pop temp 0
+	call Output.println 0
+	pop temp 0
+	push local 2
+	return
+function Memory.deAlloc 1
+	push static 0
+	pop local 0
+label L13
+	push local 0
+	push constant 1
+	add
+	pop pointer 1
+	push that 0
+	push constant 0
+	eq
+	not
+	not
+	if-goto L14
+	push local 0
+	push constant 1
+	add
+	pop pointer 1
+	push that 0
+	pop local 0
+	goto L13
+label L14
+	push local 0
+	push constant 1
+	add
+	pop temp 1
+	push argument 0
+	push constant 1
+	sub
+	push temp 1
+	pop pointer 1
+	pop that 0
+	push local 0
+	push constant 1
+	add
+	pop pointer 1
+	push that 0
+	pop local 0
+	push local 0
+	push constant 1
+	add
+	pop temp 1
+	push constant 0
+	push temp 1
+	pop pointer 1
+	pop that 0
+	push constant 0
+	return

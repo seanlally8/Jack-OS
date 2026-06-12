@@ -1,0 +1,94 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Memory.jack
+/**
+ * This library provides two services: direct access to the computer's main
+ * memory (RAM), and allocation and recycling of memory blocks. The Hack RAM
+ * consists of 32,768 words, each holding a 16-bit binary number.
+ */ 
+class Memory {
+
+    static Array freeList;
+    static int heapSize, heapBase;
+
+
+    /** Initializes the class. */
+    function void init() {
+      let heapBase = 2048;
+      let freeList = heapBase;
+      let heapSize = 14334;
+      let freeList[0] = heapSize;
+      let freeList[1] = 0;
+      return;
+    }
+
+    /** Returns the RAM value at the given address. */
+    function int peek(int address) {
+      var Array get;
+      let get = 0;
+      return get[address];
+    }
+
+    /** Sets the RAM value at the given address to the given value. */
+    function void poke(int address, int value) {
+      var Array set;
+      let set = 0;
+      let set[address] = value;
+      return;
+    }
+
+    /** Finds an available RAM block of the given size and returns
+     *  a reference to its base address. */
+    function Array alloc(int size) {
+      var int i, rightSize;
+      var Array block, ptr, prev;
+      var Array rightAddr, prevAddr;
+
+      let i = 0;
+      let block = 0;
+      let ptr = freeList;
+      let rightSize = heapSize + 1;
+      let prev = freeList;
+
+      while (~(ptr = 0)) {
+          do Output.printInt(ptr[0]);
+          do Output.println();
+        if (~(ptr[0] < (size + 1)) & (ptr[0] < rightSize)) {
+          let prevAddr = prev; 
+          let rightAddr = ptr;
+          let rightSize = ptr[0];
+        }
+        let prev = ptr;
+        let ptr = ptr[1];
+      }
+
+      let block = rightAddr + ((rightAddr[0] + 2) - size);
+      let block[-1] = size;
+      let rightAddr[0] = rightAddr[0] - (size + 1);  
+      do Output.printInt(ptr);
+      do Output.println();
+      do Output.printInt(block);
+      do Output.println();
+      do Output.printInt(size);
+      do Output.println();
+      do Output.println();
+      do Output.println();
+
+      return block;
+    }
+
+    /** De-allocates the given object (cast as an array) by making
+     *  it available for future allocations. */
+    function void deAlloc(Array o) {
+      var Array ptr;
+      let ptr = freeList;
+      while (~(ptr[1] = 0)) {
+        let ptr = ptr[1];
+      }
+      let ptr[1] = o - 1;
+      let ptr = ptr[1];
+      let ptr[1] = 0;
+      return;
+    }    
+}
