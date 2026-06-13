@@ -18,6 +18,9 @@ class Output {
     // Character map for displaying characters
     static Array charMaps; 
 
+    // Coordinates of Cursor
+    static int x, y;
+
     /** Initializes the screen, and locates the cursor at the screen's top-left. */
     function void init() {
       do initMap();
@@ -177,13 +180,45 @@ class Output {
     /** Moves the cursor to the j-th column of the i-th row,
      *  and erases the character displayed there. */
     function void moveCursor(int i, int j) {
+      var Array p; 
+      var int count, r, memoryAddress;
+
+      let r = Math.mod(i, 2);
+      let memoryAddress = 16384;
+
+      let y = i;
+      let x = j;
+      let p = Output.getMap(0);
+      let count = y;
+
+      if ((r = 0)) {
+        while (count < 11)) {
+          do Memory.poke(memoryAddress + (11 * i * 32) + ((8 * j) / 16), p[count]);
+          let count = count + 1;
+        }
+      }
+      else {
+        while (count < 11)) {
+          do Memory.poke(memoryAddress + (11 * i * 32) + ((8 * j) / 16), p[count] * 256);
+          let count = count + 1;
+        }
+      }
+      
+      return;
     }
 
     /** Displays the given character at the cursor location,
      *  and advances the cursor one column forward. */
     function void printChar(char c) {
       var Array p;
+      var int i;
       let p = Output.getMap(c);
+      let i = 0;
+
+      while(i < 11) {
+        do Memory.poke()
+      }
+
     }
 
     /** displays the given string starting at the cursor location,

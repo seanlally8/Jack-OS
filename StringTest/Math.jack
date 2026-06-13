@@ -170,6 +170,14 @@ class Math {
       return bit_tracker;
     }
 
+    function int mod(int x, int y) {
+      var int result;
+      let result = x / y;
+      let result = result * y;
+      let result = x - result;
+      return result;
+    }
+
     function int getRemainder() {
       return remainder;
     }
