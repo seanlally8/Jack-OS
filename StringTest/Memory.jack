@@ -52,8 +52,6 @@ class Memory {
       let prev = freeList;
 
       while (~(ptr = 0)) {
-          do Output.printInt(ptr[0]);
-          do Output.println();
         if (~(ptr[0] < (size + 1)) & (ptr[0] < rightSize)) {
           let prevAddr = prev; 
           let rightAddr = ptr;
@@ -66,14 +64,6 @@ class Memory {
       let block = rightAddr + ((rightAddr[0] + 2) - size);
       let block[-1] = size;
       let rightAddr[0] = rightAddr[0] - (size + 1);  
-      do Output.printInt(ptr);
-      do Output.println();
-      do Output.printInt(block);
-      do Output.println();
-      do Output.printInt(size);
-      do Output.println();
-      do Output.println();
-      do Output.println();
 
       return block;
     }
