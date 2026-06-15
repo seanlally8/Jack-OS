@@ -1514,6 +1514,8 @@ label L5
 	push local 3
 	push constant 11
 	push argument 0
+	push local 1
+	add
 	call Math.multiply 2
 	push constant 32
 	call Math.multiply 2
@@ -1548,6 +1550,8 @@ label L7
 	push local 3
 	push constant 11
 	push argument 0
+	push local 1
+	add
 	call Math.multiply 2
 	push constant 32
 	call Math.multiply 2
@@ -1606,6 +1610,8 @@ label L11
 	push local 3
 	push constant 11
 	push static 2
+	push local 1
+	add
 	call Math.multiply 2
 	push constant 32
 	call Math.multiply 2
@@ -1640,6 +1646,8 @@ label L13
 	push local 3
 	push constant 11
 	push static 2
+	push local 1
+	add
 	call Math.multiply 2
 	push constant 32
 	call Math.multiply 2
@@ -1723,6 +1731,10 @@ label L19
 	push that 0
 	call Output.printChar 1
 	pop temp 0
+	push local 1
+	push constant 1
+	add
+	pop local 1
 	goto L19
 label L20
 	push constant 0

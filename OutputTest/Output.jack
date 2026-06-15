@@ -19,13 +19,13 @@ class Output {
     static Array charMaps; 
 
     // Coordinates of Cursor
-    static int x, y;
+    static int col, row;
 
     /** Initializes the screen, and locates the cursor at the screen's top-left. */
     function void init() {
       do Output.initMap();
-      let x = 0;
-      let y = 0;
+      let col = 0;
+      let row = 0;
       return;
     }
 
@@ -188,20 +188,20 @@ class Output {
       let r = j - ((j/2) * 2);
       let memoryAddress = 16384;
 
-      let y = i;
-      let x = j;
+      let row = i;
+      let col = j;
       let p = Output.getMap(0);
       let count = 0;
 
       if ((r = 0)) {
         while (count < 11) {
-          do Memory.poke(memoryAddress + (11 * i * 32) + ((8 * j) / 16), p[count]);
+          do Memory.poke((memoryAddress + (11 * (i + count) * 32) + ((8 * j) / 16)), p[count]);
           let count = count + 1;
         }
       }
       else {
         while (count < 11) {
-          do Memory.poke(memoryAddress + (11 * i * 32) + ((8 * j) / 16), p[count] * 256);
+          do Memory.poke(memoryAddress + (11 * (i + count) * 32) + ((8 * j) / 16), p[count] * 256);
           let count = count + 1;
         }
       }
@@ -217,31 +217,31 @@ class Output {
       let memoryAddress = 16384;
       let p = Output.getMap(c);
       let count = 0;
-      let r = x - ((x/2) * 2);
+      let r = col - ((col/2) * 2);
 
       if (r = 0) {
         while(count < 11) {
-          do Memory.poke(memoryAddress + (11 * y * 32) + ((8 * x) / 16), p[count]);
+          do Memory.poke(memoryAddress + (11 * (row + count) * 32) + ((8 * col) / 16), p[count]);
           let count = count + 1;
         }
       }
       else {
         while(count < 11) {
-          do Memory.poke(memoryAddress + (11 * y * 32) + ((8 * x) / 16), p[count] * 256);
+          do Memory.poke(memoryAddress + (11 * (row + count) * 32) + ((8 * col) / 16), p[count] * 256);
           let count = count + 1;
         }
       }
 
-      if ((x + 1) > 63) {
-        if ((y + 1) > 22) {
+      if ((col + 1) > 63) {
+        if ((row + 1) > 22) {
           do Output.moveCursor(0, 0);
         }
         else {
-          do Output.moveCursor(y + 1, 0);
+          do Output.moveCursor(row + 1, 0);
         }
       }
       else {
-        do Output.moveCursor(y, x + 1);
+        do Output.moveCursor(row, col + 1);
       }
       return;
     }
@@ -254,6 +254,7 @@ class Output {
       let count = 0;
       while (count < length) {
         do Output.printChar(s[count]);
+        let count = count + 1;
       }
       return;
 
@@ -283,11 +284,11 @@ class Output {
 
     /** Advances the cursor to the beginning of the next line. */
     function void println() {
-      if ((y + 1) > 22) {
+      if ((row + 1) > 22) {
         do Output.moveCursor(0, 0);
       }
       else {
-        do Output.moveCursor(y + 1, 0);
+        do Output.moveCursor(row + 1, 0);
       }
       return;
     }

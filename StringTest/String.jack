@@ -12,6 +12,7 @@
 class String {
     field int length, max;
     field Array currentString;
+    static int origin;
 
     /** constructs a new empty string with a maximum length of maxLength
      *  and initial length of 0. */
@@ -91,30 +92,42 @@ class String {
       let i = 0;
 
       while (i < length) {
+        if (currentString[i] = 45){
+          let i = i + 1;
+        }
         let d = currentString[i] - 48;
         let val = (val * 10) + d;
         let i = i + 1;
       }
-      return val;
+      if (currentString[0] = 45) {
+        return -val;
+      }
+      else {
+        return val;
+      }
     }
 
     /** Sets this string to hold a representation of the given value. */
     method void setInt(int val) {
       var int lastDigit, c, absVal;
+      let length = 0;
       let absVal = Math.abs(val);
       let lastDigit = absVal - ((absVal / 10) * 10);
-
+      
       let c = lastDigit + 48;
 
+      if (val < 0) {
+        let origin = val;
+      }
+
       if (absVal < 10) {
-        let length = 0;
-        if (val < 0) {
+        if (origin < 0) {
           do appendChar(45);
         }
         do appendChar(c);
       }
       else {
-        do setInt(val / 10);
+        do setInt(absVal / 10);
         do appendChar(c);
       }
       return; 

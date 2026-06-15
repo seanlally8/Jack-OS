@@ -6,16 +6,16 @@ function String.new 0
 	push constant 1
 	lt
 	not
-	if-goto L33
+	if-goto L1
 	push constant 1
 	call Array.new 1
 	pop this 2
-	goto L34
-label L33
+	goto L2
+label L1
 	push argument 0
 	call Array.new 1
 	pop this 2
-label L34
+label L2
 	push argument 0
 	pop this 1
 	push constant 0
@@ -44,18 +44,18 @@ function String.charAt 0
 	sub
 	gt
 	not
-	if-goto L35
+	if-goto L3
 	push constant 0
 	return
-	goto L36
-label L35
+	goto L4
+label L3
 	push this 2
 	push argument 1
 	add
 	pop pointer 1
 	push that 0
 	return
-label L36
+label L4
 function String.setCharAt 0
 	push argument 0
 	pop pointer 0
@@ -65,11 +65,11 @@ function String.setCharAt 0
 	sub
 	gt
 	not
-	if-goto L37
+	if-goto L5
 	push constant 0
 	return
-	goto L38
-label L37
+	goto L6
+label L5
 	push this 2
 	push argument 1
 	add
@@ -80,7 +80,7 @@ label L37
 	pop that 0
 	push constant 0
 	return
-label L38
+label L6
 function String.appendChar 0
 	push argument 0
 	pop pointer 0
@@ -90,7 +90,7 @@ function String.appendChar 0
 	push this 1
 	gt
 	not
-	if-goto L39
+	if-goto L7
 	push constant 29
 	call String.new 1
 	push constant 97
@@ -157,8 +157,8 @@ function String.appendChar 0
 	pop temp 0
 	push pointer 0
 	return
-	goto L40
-label L39
+	goto L8
+label L7
 	push this 2
 	push this 0
 	add
@@ -173,7 +173,7 @@ label L39
 	pop this 0
 	push pointer 0
 	return
-label L40
+label L8
 function String.eraseLastChar 0
 	push argument 0
 	pop pointer 0
@@ -181,7 +181,7 @@ function String.eraseLastChar 0
 	push constant 0
 	eq
 	not
-	if-goto L41
+	if-goto L9
 	push constant 18
 	call String.new 1
 	push constant 101
@@ -224,9 +224,9 @@ function String.eraseLastChar 0
 	pop temp 0
 	call Output.println 0
 	pop temp 0
-	goto L42
-label L41
-label L42
+	goto L10
+label L9
+label L10
 	push this 0
 	push constant 1
 	sub
@@ -240,12 +240,28 @@ function String.intValue 3
 	pop local 0
 	push constant 0
 	pop local 1
-label L43
+label L11
 	push local 1
 	push this 0
 	lt
 	not
-	if-goto L44
+	if-goto L12
+	push this 2
+	push local 1
+	add
+	pop pointer 1
+	push that 0
+	push constant 45
+	eq
+	not
+	if-goto L13
+	push local 1
+	push constant 1
+	add
+	pop local 1
+	goto L14
+label L13
+label L14
 	push this 2
 	push local 1
 	add
@@ -264,13 +280,30 @@ label L43
 	push constant 1
 	add
 	pop local 1
-	goto L43
-label L44
+	goto L11
+label L12
+	push this 2
+	push constant 0
+	add
+	pop pointer 1
+	push that 0
+	push constant 45
+	eq
+	not
+	if-goto L15
+	push local 0
+	neg
+	return
+	goto L16
+label L15
 	push local 0
 	return
+label L16
 function String.setInt 3
 	push argument 0
 	pop pointer 0
+	push constant 0
+	pop this 0
 	push argument 1
 	call Math.abs 1
 	pop local 2
@@ -286,33 +319,41 @@ function String.setInt 3
 	push constant 48
 	add
 	pop local 1
+	push argument 1
+	push constant 0
+	lt
+	not
+	if-goto L17
+	push argument 1
+	pop static 0
+	goto L18
+label L17
+label L18
 	push local 2
 	push constant 10
 	lt
 	not
-	if-goto L45
-	push constant 0
-	pop this 0
-	push argument 1
+	if-goto L19
+	push static 0
 	push constant 0
 	lt
 	not
-	if-goto L47
+	if-goto L21
 	push pointer 0
 	push constant 45
 	call String.appendChar 2
 	pop temp 0
-	goto L48
-label L47
-label L48
+	goto L22
+label L21
+label L22
 	push pointer 0
 	push local 1
 	call String.appendChar 2
 	pop temp 0
-	goto L46
-label L45
+	goto L20
+label L19
 	push pointer 0
-	push argument 1
+	push local 2
 	push constant 10
 	call Math.divide 2
 	call String.setInt 2
@@ -321,7 +362,7 @@ label L45
 	push local 1
 	call String.appendChar 2
 	pop temp 0
-label L46
+label L20
 	push constant 0
 	return
 function String.newLine 0
