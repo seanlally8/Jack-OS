@@ -70,15 +70,6 @@ label L9
 	add
 	pop pointer 1
 	push that 0
-	call Output.printInt 1
-	pop temp 0
-	call Output.println 0
-	pop temp 0
-	push local 3
-	push constant 0
-	add
-	pop pointer 1
-	push that 0
 	push argument 0
 	push constant 1
 	add
@@ -154,25 +145,6 @@ label L10
 	push temp 1
 	pop pointer 1
 	pop that 0
-	push local 3
-	call Output.printInt 1
-	pop temp 0
-	call Output.println 0
-	pop temp 0
-	push local 2
-	call Output.printInt 1
-	pop temp 0
-	call Output.println 0
-	pop temp 0
-	push argument 0
-	call Output.printInt 1
-	pop temp 0
-	call Output.println 0
-	pop temp 0
-	call Output.println 0
-	pop temp 0
-	call Output.println 0
-	pop temp 0
 	push local 2
 	return
 function Memory.deAlloc 1

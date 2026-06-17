@@ -488,15 +488,15 @@ function Output.initMap 1
 	call Output.create 12
 	pop temp 0
 	push constant 65
-	push constant 12
-	push constant 18
-	push constant 33
-	push constant 33
+	push constant 30
 	push constant 63
-	push constant 33
-	push constant 33
-	push constant 33
-	push constant 33
+	push constant 51
+	push constant 51
+	push constant 63
+	push constant 63
+	push constant 51
+	push constant 51
+	push constant 51
 	push constant 0
 	push constant 0
 	call Output.create 12
@@ -1480,7 +1480,7 @@ label L2
 	pop pointer 1
 	push that 0
 	return
-function Output.moveCursor 4
+function Output.moveCursor 7
 	push argument 1
 	push argument 1
 	push constant 2
@@ -1489,18 +1489,22 @@ function Output.moveCursor 4
 	call Math.multiply 2
 	sub
 	pop local 2
-	push constant 16384
+	push static 1
+	push static 1
+	push constant 2
+	call Math.divide 2
+	push constant 2
+	call Math.multiply 2
+	sub
 	pop local 3
-	push argument 0
-	pop static 2
-	push argument 1
-	pop static 1
+	push constant 16384
+	pop local 4
 	push constant 0
 	call Output.getMap 1
 	pop local 0
 	push constant 0
 	pop local 1
-	push local 2
+	push local 3
 	push constant 0
 	eq
 	not
@@ -1511,26 +1515,32 @@ label L5
 	lt
 	not
 	if-goto L6
-	push local 3
 	push constant 11
-	push argument 0
+	push static 2
+	call Math.multiply 2
 	push local 1
 	add
-	call Math.multiply 2
 	push constant 32
 	call Math.multiply 2
-	add
 	push constant 8
-	push argument 1
+	push static 1
 	call Math.multiply 2
 	push constant 16
 	call Math.divide 2
 	add
-	push local 0
-	push local 1
+	pop local 5
+	push local 4
+	push local 5
 	add
-	pop pointer 1
-	push that 0
+	call Memory.peek 1
+	pop local 6
+	push local 4
+	push local 5
+	add
+	push local 6
+	push constant 256
+	neg
+	and
 	call Memory.poke 2
 	pop temp 0
 	push local 1
@@ -1547,28 +1557,31 @@ label L7
 	lt
 	not
 	if-goto L8
-	push local 3
 	push constant 11
-	push argument 0
+	push static 2
+	call Math.multiply 2
 	push local 1
 	add
-	call Math.multiply 2
 	push constant 32
 	call Math.multiply 2
-	add
 	push constant 8
-	push argument 1
+	push static 1
 	call Math.multiply 2
 	push constant 16
 	call Math.divide 2
 	add
-	push local 0
-	push local 1
+	pop local 5
+	push local 4
+	push local 5
 	add
-	pop pointer 1
-	push that 0
-	push constant 256
-	call Math.multiply 2
+	call Memory.peek 1
+	pop local 6
+	push local 4
+	push local 5
+	add
+	push local 6
+	push constant 255
+	and
 	call Memory.poke 2
 	pop temp 0
 	push local 1
@@ -1579,23 +1592,7 @@ label L7
 label L8
 label L4
 	push constant 0
-	return
-function Output.printChar 4
-	push constant 16384
-	pop local 3
-	push argument 0
-	call Output.getMap 1
-	pop local 0
-	push constant 0
 	pop local 1
-	push static 1
-	push static 1
-	push constant 2
-	call Math.divide 2
-	push constant 2
-	call Math.multiply 2
-	sub
-	pop local 2
 	push local 2
 	push constant 0
 	eq
@@ -1607,26 +1604,35 @@ label L11
 	lt
 	not
 	if-goto L12
-	push local 3
 	push constant 11
-	push static 2
+	push argument 0
+	call Math.multiply 2
 	push local 1
 	add
-	call Math.multiply 2
 	push constant 32
 	call Math.multiply 2
-	add
 	push constant 8
-	push static 1
+	push argument 1
 	call Math.multiply 2
 	push constant 16
 	call Math.divide 2
+	add
+	pop local 5
+	push local 4
+	push local 5
+	add
+	call Memory.peek 1
+	pop local 6
+	push local 4
+	push local 5
 	add
 	push local 0
 	push local 1
 	add
 	pop pointer 1
 	push that 0
+	push local 6
+	add
 	call Memory.poke 2
 	pop temp 0
 	push local 1
@@ -1643,20 +1649,27 @@ label L13
 	lt
 	not
 	if-goto L14
-	push local 3
 	push constant 11
-	push static 2
+	push argument 0
+	call Math.multiply 2
 	push local 1
 	add
-	call Math.multiply 2
 	push constant 32
 	call Math.multiply 2
-	add
 	push constant 8
-	push static 1
+	push argument 1
 	call Math.multiply 2
 	push constant 16
 	call Math.divide 2
+	add
+	pop local 5
+	push local 4
+	push local 5
+	add
+	call Memory.peek 1
+	pop local 6
+	push local 4
+	push local 5
 	add
 	push local 0
 	push local 1
@@ -1665,6 +1678,8 @@ label L13
 	push that 0
 	push constant 256
 	call Math.multiply 2
+	push local 6
+	add
 	call Memory.poke 2
 	pop temp 0
 	push local 1
@@ -1674,6 +1689,24 @@ label L13
 	goto L13
 label L14
 label L10
+	push argument 0
+	pop static 2
+	push argument 1
+	pop static 1
+	push constant 0
+	return
+function Output.printChar 8
+	push constant 16384
+	pop local 3
+	push argument 0
+	call Output.getMap 1
+	pop local 0
+	push constant 0
+	pop local 1
+	push static 1
+	pop local 6
+	push static 2
+	pop local 5
 	push static 1
 	push constant 1
 	add
@@ -1710,6 +1743,110 @@ label L15
 	call Output.moveCursor 2
 	pop temp 0
 label L16
+	push local 6
+	push local 6
+	push constant 2
+	call Math.divide 2
+	push constant 2
+	call Math.multiply 2
+	sub
+	pop local 2
+	push local 2
+	push constant 0
+	eq
+	not
+	if-goto L19
+label L21
+	push local 1
+	push constant 11
+	lt
+	not
+	if-goto L22
+	push constant 11
+	push local 5
+	call Math.multiply 2
+	push local 1
+	add
+	push constant 32
+	call Math.multiply 2
+	push constant 8
+	push local 6
+	call Math.multiply 2
+	push constant 16
+	call Math.divide 2
+	add
+	pop local 4
+	push local 3
+	push local 4
+	add
+	call Memory.peek 1
+	pop local 7
+	push local 3
+	push local 4
+	add
+	push local 0
+	push local 1
+	add
+	pop pointer 1
+	push that 0
+	push local 7
+	add
+	call Memory.poke 2
+	pop temp 0
+	push local 1
+	push constant 1
+	add
+	pop local 1
+	goto L21
+label L22
+	goto L20
+label L19
+label L23
+	push local 1
+	push constant 11
+	lt
+	not
+	if-goto L24
+	push constant 11
+	push local 5
+	call Math.multiply 2
+	push local 1
+	add
+	push constant 32
+	call Math.multiply 2
+	push constant 8
+	push local 6
+	call Math.multiply 2
+	push constant 16
+	call Math.divide 2
+	add
+	pop local 4
+	push local 3
+	push local 4
+	add
+	call Memory.peek 1
+	pop local 7
+	push local 3
+	push local 4
+	add
+	push local 0
+	push local 1
+	add
+	pop pointer 1
+	push that 0
+	push constant 256
+	call Math.multiply 2
+	push local 7
+	add
+	call Memory.poke 2
+	pop temp 0
+	push local 1
+	push constant 1
+	add
+	pop local 1
+	goto L23
+label L24
+label L20
 	push constant 0
 	return
 function Output.printString 2
@@ -1718,39 +1855,50 @@ function Output.printString 2
 	pop local 0
 	push constant 0
 	pop local 1
-label L19
+label L25
 	push local 1
 	push local 0
 	lt
 	not
-	if-goto L20
+	if-goto L26
 	push argument 0
 	push local 1
-	add
-	pop pointer 1
-	push that 0
+	call String.charAt 2
 	call Output.printChar 1
 	pop temp 0
 	push local 1
 	push constant 1
 	add
 	pop local 1
-	goto L19
-label L20
+	goto L25
+label L26
 	push constant 0
 	return
-function Output.printInt 4
+function Output.printInt 6
 	push constant 1
 	pop local 1
+	push argument 0
+	pop local 2
 	push constant 0
 	pop local 0
-label L21
+	push argument 0
+	push constant 0
+	lt
+	not
+	if-goto L27
+	push argument 0
+	call Math.abs 1
+	pop local 2
+	goto L28
+label L27
+label L28
+label L29
 	push local 1
 	push constant 1
 	eq
 	not
-	if-goto L22
-	push argument 0
+	if-goto L30
+	push local 2
 	push constant 10
 	call Math.divide 2
 	pop local 2
@@ -1762,24 +1910,24 @@ label L21
 	push constant 0
 	eq
 	not
-	if-goto L23
+	if-goto L31
 	push constant 0
 	pop local 1
-	goto L24
-label L23
-label L24
-	goto L21
-label L22
+	goto L32
+label L31
+label L32
+	goto L29
+label L30
 	push local 0
 	push constant 1
 	add
 	call String.new 1
-	pop local 3
-	push local 3
+	pop local 5
+	push local 5
 	push argument 0
 	call String.setInt 2
 	pop temp 0
-	push local 3
+	push local 5
 	call Output.printString 1
 	pop temp 0
 	push constant 0
@@ -1791,22 +1939,56 @@ function Output.println 0
 	push constant 22
 	gt
 	not
-	if-goto L25
+	if-goto L33
 	push constant 0
 	push constant 0
 	call Output.moveCursor 2
 	pop temp 0
-	goto L26
-label L25
+	goto L34
+label L33
 	push static 2
 	push constant 1
 	add
 	push constant 0
 	call Output.moveCursor 2
 	pop temp 0
-label L26
+label L34
 	push constant 0
 	return
 function Output.backSpace 0
+	push static 1
+	push constant 1
+	sub
+	push constant 0
+	lt
+	not
+	if-goto L35
+	push static 2
+	push constant 1
+	sub
+	push constant 0
+	lt
+	not
+	if-goto L37
+	push constant 0
+	return
+	goto L38
+label L37
+	push static 2
+	push constant 1
+	sub
+	push constant 63
+	call Output.moveCursor 2
+	pop temp 0
+label L38
+	goto L36
+label L35
+	push static 2
+	push static 1
+	push constant 1
+	sub
+	call Output.moveCursor 2
+	pop temp 0
+label L36
 	push constant 0
 	return

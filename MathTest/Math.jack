@@ -97,7 +97,6 @@ class Math {
       let lower = 0;
       let result = 0;
       let squr = 0;
-      do Output.printInt(upper);
 
       while (exit = 1) {
         let result = (upper + lower) / 2;
@@ -112,9 +111,6 @@ class Math {
           let lower = result;
         }
       }
-      do Output.println();
-      do Output.printInt(result);
-      do Output.println();
       return result;
 
     }

@@ -251,9 +251,6 @@ label L18
 	pop local 3
 	push constant 0
 	pop local 4
-	push local 1
-	call Output.printInt 1
-	pop temp 0
 label L19
 	push local 0
 	push constant 1
@@ -316,13 +313,6 @@ label L25
 label L26
 	goto L19
 label L20
-	call Output.println 0
-	pop temp 0
-	push local 3
-	call Output.printInt 1
-	pop temp 0
-	call Output.println 0
-	pop temp 0
 	push local 3
 	return
 function Math.max 0
@@ -411,6 +401,21 @@ label L36
 	pop local 2
 	goto L33
 label L34
+	push local 0
+	return
+function Math.mod 1
+	push argument 0
+	push argument 1
+	call Math.divide 2
+	pop local 0
+	push local 0
+	push argument 1
+	call Math.multiply 2
+	pop local 0
+	push argument 0
+	push local 0
+	sub
+	pop local 0
 	push local 0
 	return
 function Math.getRemainder 0
