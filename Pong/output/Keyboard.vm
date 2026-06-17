@@ -10,25 +10,25 @@ function Keyboard.keyPressed 1
 	push local 0
 	return
 function Keyboard.readChar 1
-label L23
+label L45
 	call Keyboard.keyPressed 0
 	push constant 0
 	eq
 	not
-	if-goto L24
-	goto L23
-label L24
+	if-goto L46
+	goto L45
+label L46
 	call Keyboard.keyPressed 0
 	pop local 0
-label L25
+label L47
 	call Keyboard.keyPressed 0
 	push constant 0
 	eq
 	not
 	not
-	if-goto L26
-	goto L25
-label L26
+	if-goto L48
+	goto L47
+label L48
 	push local 0
 	push constant 32
 	lt
@@ -39,23 +39,23 @@ label L26
 	not
 	and
 	not
-	if-goto L27
+	if-goto L49
 	push local 0
 	call Output.printChar 1
 	pop temp 0
-	goto L28
-label L27
-label L28
+	goto L50
+label L49
+label L50
 	push local 0
 	call String.backSpace 0
 	eq
 	not
-	if-goto L29
+	if-goto L51
 	call Output.backSpace 0
 	pop temp 0
-	goto L30
-label L29
-label L30
+	goto L52
+label L51
+label L52
 	push local 0
 	return
 function Keyboard.readLine 3
@@ -69,13 +69,13 @@ function Keyboard.readLine 3
 	pop local 0
 	call Keyboard.readChar 0
 	pop local 1
-label L31
+label L53
 	push local 1
 	push constant 128
 	eq
 	not
 	not
-	if-goto L32
+	if-goto L54
 	push local 1
 	call String.backSpace 0
 	eq
@@ -85,30 +85,30 @@ label L31
 	gt
 	and
 	not
-	if-goto L33
+	if-goto L55
 	push local 0
 	call String.eraseLastChar 1
 	pop temp 0
-	goto L34
-label L33
-label L34
+	goto L56
+label L55
+label L56
 	push local 1
 	call String.backSpace 0
 	eq
 	not
 	not
-	if-goto L35
+	if-goto L57
 	push local 0
 	push local 1
 	call String.appendChar 2
 	pop temp 0
-	goto L36
-label L35
-label L36
+	goto L58
+label L57
+label L58
 	call Keyboard.readChar 0
 	pop local 1
-	goto L31
-label L32
+	goto L53
+label L54
 	call Output.println 0
 	pop temp 0
 	push local 0

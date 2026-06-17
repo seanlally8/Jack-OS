@@ -1,0 +1,115 @@
+function Sys.init 0
+	call Memory.init 0
+	pop temp 0
+	call Math.init 0
+	pop temp 0
+	call Output.init 0
+	pop temp 0
+	call Screen.init 0
+	pop temp 0
+	call Keyboard.init 0
+	pop temp 0
+	call Main.main 0
+	pop temp 0
+	push constant 0
+	return
+function Sys.halt 0
+label L159
+	push constant 1
+	neg
+	not
+	if-goto L160
+	goto L159
+label L160
+	push constant 0
+	return
+function Sys.wait 4
+	push constant 14
+	pop local 1
+	push constant 13
+	pop local 2
+	push constant 0
+	pop local 0
+label L161
+	push local 0
+	push argument 0
+	lt
+	not
+	if-goto L162
+	push local 0
+	pop local 3
+label L163
+	push local 0
+	push local 3
+	push local 1
+	add
+	lt
+	not
+	if-goto L164
+	push local 0
+	push constant 1
+	add
+	pop local 0
+	goto L163
+label L164
+	push local 0
+	pop local 3
+label L165
+	push local 0
+	push local 3
+	push local 2
+	sub
+	gt
+	not
+	if-goto L166
+	push local 0
+	push constant 1
+	sub
+	pop local 0
+	goto L165
+label L166
+	goto L161
+label L162
+	push constant 0
+	return
+function Sys.error 0
+	push constant 3
+	call String.new 1
+	push constant 69
+	call String.appendChar 2
+	push constant 82
+	call String.appendChar 2
+	push constant 82
+	call String.appendChar 2
+	call Output.printString 1
+	pop temp 0
+	push constant 11
+	call String.new 1
+	push constant 60
+	call String.appendChar 2
+	push constant 101
+	call String.appendChar 2
+	push constant 114
+	call String.appendChar 2
+	push constant 114
+	call String.appendChar 2
+	push constant 111
+	call String.appendChar 2
+	push constant 114
+	call String.appendChar 2
+	push constant 67
+	call String.appendChar 2
+	push constant 111
+	call String.appendChar 2
+	push constant 100
+	call String.appendChar 2
+	push constant 101
+	call String.appendChar 2
+	push constant 62
+	call String.appendChar 2
+	call Output.printInt 1
+	pop temp 0
+	call Sys.halt 0
+	pop temp 0
+	push constant 0
+	return

@@ -1,0 +1,77 @@
+function Sys.init 0
+	call Memory.init 0
+	pop temp 0
+	call Math.init 0
+	pop temp 0
+	call Output.init 0
+	pop temp 0
+	call Screen.init 0
+	pop temp 0
+	call Keyboard.init 0
+	pop temp 0
+	call Main.main 0
+	pop temp 0
+	push constant 0
+	return
+function Sys.halt 0
+label L5
+	push constant 1
+	neg
+	not
+	if-goto L6
+	goto L5
+label L6
+	push constant 0
+	return
+function Sys.wait 4
+	push constant 14
+	pop local 1
+	push constant 13
+	pop local 2
+	push constant 0
+	pop local 0
+label L7
+	push local 0
+	push argument 0
+	lt
+	not
+	if-goto L8
+	push local 0
+	pop local 3
+label L9
+	push local 0
+	push local 3
+	push local 1
+	add
+	lt
+	not
+	if-goto L10
+	push local 0
+	push constant 1
+	add
+	pop local 0
+	goto L9
+label L10
+	push local 0
+	pop local 3
+label L11
+	push local 0
+	push local 3
+	push local 2
+	sub
+	gt
+	not
+	if-goto L12
+	push local 0
+	push constant 1
+	sub
+	pop local 0
+	goto L11
+label L12
+	goto L7
+label L8
+	push constant 0
+	return
+function Sys.error 0
+	push constant 0
+	return
