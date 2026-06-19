@@ -31,6 +31,10 @@ class Math {
       return;
     }
 
+    function Array getPowersOfTwo() {
+      return powersOfTwo;
+    }
+
     /** Returns the product of x and y. 
      *  When a Jack compiler detects the multiplication operator '*'
      *  in an expression, it handles it by invoking this method. 
@@ -43,7 +47,7 @@ class Math {
       let shiftedx = Math.abs(x);
 
       while (i < 16) {
-        let current_bit = Math.bit(y, i);
+        let current_bit = Math.bit(Math.abs(y), i);
         if (current_bit = 0) {
           let shiftedx = shiftedx + shiftedx;
         }
@@ -53,10 +57,12 @@ class Math {
         }
         let i = i + 1;
       }
-      if ((x < 0 & y > 0) | (x > 0 & y < 0)) {
+      if (((x < 0) & (y > 0)) | ((x > 0) & (y < 0))) {
         return -sum;
       }
-      return sum;
+      else {
+        return sum;
+      }
     }
 
     /** Returns the integer part of x / y.
@@ -101,7 +107,10 @@ class Math {
       while (exit = 1) {
         let result = (upper + lower) / 2;
         let squr = result * result;
-        if (~(squr > x) & ~((upper - result) > 1)) {
+        if (squr = x) {
+          let exit = 0;
+        }
+        if ((squr < x) & ~((upper - result) > 1)) {
           let exit = 0;
         }
         if (squr > x) {
@@ -147,23 +156,16 @@ class Math {
 
     /** Helper Functions */
     function int bit(int x, int i) {
-      var int bit_tracker, x_tracker, m;
-      let bit_tracker = 0;
-      let x_tracker = Math.abs(x);
+      var int result;
 
-      let m = 14;
+      let result = powersOfTwo[i] & x;
 
-      while (~(m < i)) {
-        if (~(powersOfTwo[m] > x_tracker)) {
-          let bit_tracker = 1;
-          let x_tracker = x_tracker - powersOfTwo[m];
-        }
-        else {
-          let bit_tracker = 0;
-        }
-        let m = m - 1;
+      if (~(result = 0)) {
+        return true; 
       }
-      return bit_tracker;
+      else {
+        return false;
+      }
     }
 
     function int mod(int x, int y) {

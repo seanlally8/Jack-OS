@@ -14,11 +14,6 @@ label L1
 	lt
 	not
 	if-goto L2
-	push local 1
-	call Output.printInt 1
-	pop temp 0
-	call Output.println 0
-	pop temp 0
 	push static 2
 	push local 0
 	add
@@ -38,6 +33,9 @@ label L1
 	goto L1
 label L2
 	push constant 0
+	return
+function Math.getPowersOfTwo 0
+	push static 2
 	return
 function Math.multiply 4
 	push constant 0
@@ -275,15 +273,7 @@ label L19
 	pop local 4
 	push local 4
 	push argument 0
-	gt
-	not
-	push local 1
-	push local 3
-	sub
-	push constant 1
-	gt
-	not
-	and
+	eq
 	not
 	if-goto L21
 	push constant 0
@@ -293,14 +283,31 @@ label L21
 label L22
 	push local 4
 	push argument 0
+	lt
+	push local 1
+	push local 3
+	sub
+	push constant 1
 	gt
 	not
+	and
+	not
 	if-goto L23
-	push local 3
-	pop local 1
+	push constant 0
+	pop local 0
 	goto L24
 label L23
 label L24
+	push local 4
+	push argument 0
+	gt
+	not
+	if-goto L25
+	push local 3
+	pop local 1
+	goto L26
+label L25
+label L26
 	push local 4
 	push argument 0
 	lt
@@ -311,12 +318,12 @@ label L24
 	gt
 	and
 	not
-	if-goto L25
+	if-goto L27
 	push local 3
 	pop local 2
-	goto L26
-label L25
-label L26
+	goto L28
+label L27
+label L28
 	goto L19
 label L20
 	push local 3
@@ -326,19 +333,6 @@ function Math.max 0
 	push argument 1
 	gt
 	not
-	if-goto L27
-	push argument 0
-	return
-	goto L28
-label L27
-	push argument 1
-	return
-label L28
-function Math.min 0
-	push argument 0
-	push argument 1
-	lt
-	not
 	if-goto L29
 	push argument 0
 	return
@@ -347,20 +341,33 @@ label L29
 	push argument 1
 	return
 label L30
+function Math.min 0
+	push argument 0
+	push argument 1
+	lt
+	not
+	if-goto L31
+	push argument 0
+	return
+	goto L32
+label L31
+	push argument 1
+	return
+label L32
 function Math.abs 0
 	push argument 0
 	push constant 0
 	lt
 	not
-	if-goto L31
+	if-goto L33
 	push argument 0
 	neg
 	return
-	goto L32
-label L31
+	goto L34
+label L33
 	push argument 0
 	return
-label L32
+label L34
 function Math.bit 1
 	push static 2
 	push argument 1
@@ -375,15 +382,15 @@ function Math.bit 1
 	eq
 	not
 	not
-	if-goto L33
+	if-goto L35
 	push constant 1
 	neg
 	return
-	goto L34
-label L33
+	goto L36
+label L35
 	push constant 0
 	return
-label L34
+label L36
 function Math.mod 1
 	push argument 0
 	push argument 1

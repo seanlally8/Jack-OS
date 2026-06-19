@@ -34,6 +34,9 @@ label L123
 label L124
 	push constant 0
 	return
+function Math.getPowersOfTwo 0
+	push static 2
+	return
 function Math.multiply 4
 	push constant 0
 	pop local 3
@@ -49,6 +52,7 @@ label L125
 	not
 	if-goto L126
 	push argument 1
+	call Math.abs 1
 	push local 3
 	call Math.bit 2
 	pop local 0
@@ -82,16 +86,16 @@ label L126
 	push constant 0
 	lt
 	push argument 1
-	and
 	push constant 0
 	gt
+	and
 	push argument 0
 	push constant 0
 	gt
 	push argument 1
-	and
 	push constant 0
 	lt
+	and
 	or
 	not
 	if-goto L129
@@ -100,9 +104,9 @@ label L126
 	return
 	goto L130
 label L129
-label L130
 	push local 2
 	return
+label L130
 function Math.divide 3
 	push argument 0
 	call Math.abs 1
@@ -269,15 +273,7 @@ label L141
 	pop local 4
 	push local 4
 	push argument 0
-	gt
-	not
-	push local 1
-	push local 3
-	sub
-	push constant 1
-	gt
-	not
-	and
+	eq
 	not
 	if-goto L143
 	push constant 0
@@ -287,14 +283,31 @@ label L143
 label L144
 	push local 4
 	push argument 0
+	lt
+	push local 1
+	push local 3
+	sub
+	push constant 1
 	gt
 	not
+	and
+	not
 	if-goto L145
-	push local 3
-	pop local 1
+	push constant 0
+	pop local 0
 	goto L146
 label L145
 label L146
+	push local 4
+	push argument 0
+	gt
+	not
+	if-goto L147
+	push local 3
+	pop local 1
+	goto L148
+label L147
+label L148
 	push local 4
 	push argument 0
 	lt
@@ -305,12 +318,12 @@ label L146
 	gt
 	and
 	not
-	if-goto L147
+	if-goto L149
 	push local 3
 	pop local 2
-	goto L148
-label L147
-label L148
+	goto L150
+label L149
+label L150
 	goto L141
 label L142
 	push local 3
@@ -320,19 +333,6 @@ function Math.max 0
 	push argument 1
 	gt
 	not
-	if-goto L149
-	push argument 0
-	return
-	goto L150
-label L149
-	push argument 1
-	return
-label L150
-function Math.min 0
-	push argument 0
-	push argument 1
-	lt
-	not
 	if-goto L151
 	push argument 0
 	return
@@ -341,68 +341,56 @@ label L151
 	push argument 1
 	return
 label L152
+function Math.min 0
+	push argument 0
+	push argument 1
+	lt
+	not
+	if-goto L153
+	push argument 0
+	return
+	goto L154
+label L153
+	push argument 1
+	return
+label L154
 function Math.abs 0
 	push argument 0
 	push constant 0
 	lt
 	not
-	if-goto L153
+	if-goto L155
 	push argument 0
 	neg
 	return
-	goto L154
-label L153
+	goto L156
+label L155
 	push argument 0
 	return
-label L154
-function Math.bit 3
-	push constant 0
-	pop local 0
-	push argument 0
-	call Math.abs 1
-	pop local 1
-	push constant 14
-	pop local 2
-label L155
-	push local 2
-	push argument 1
-	lt
-	not
-	not
-	if-goto L156
+label L156
+function Math.bit 1
 	push static 2
-	push local 2
+	push argument 1
 	add
 	pop pointer 1
 	push that 0
-	push local 1
-	gt
+	push argument 0
+	and
+	pop local 0
+	push local 0
+	push constant 0
+	eq
 	not
 	not
 	if-goto L157
 	push constant 1
-	pop local 0
-	push local 1
-	push static 2
-	push local 2
-	add
-	pop pointer 1
-	push that 0
-	sub
-	pop local 1
+	neg
+	return
 	goto L158
 label L157
 	push constant 0
-	pop local 0
-label L158
-	push local 2
-	push constant 1
-	sub
-	pop local 2
-	goto L155
-label L156
-	push local 0
 	return
+label L158
 function Math.mod 1
 	push argument 0
 	push argument 1

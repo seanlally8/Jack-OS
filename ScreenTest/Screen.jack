@@ -1,0 +1,282 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Screen.jack
+/**
+ * A library of functions for displaying graphics on the screen.
+ * The Hack physical screen consists of 512 rows (indexed 0..511, top to bottom)
+ * of 256 pixels each (indexed 0..255, left to right). The top left pixel on 
+ * the screen is indexed (0,0).
+ */
+class Screen {
+    static boolean color;
+
+    /** Initializes the Screen. */
+    function void init() {
+      do Screen.setColor(true);
+      return;
+    }
+
+    /** Erases the entire screen. */
+    function void clearScreen() {
+      var int register;
+      let register = 16384;
+      
+      while (~(register > 24575)) {
+        do Memory.poke(register, 0);
+        let register = register + 1;
+      }
+      return;
+    }
+
+    /** Sets the current color, to be used for all subsequent drawXXX commands.
+     *  Black is represented by true, white by false. */
+    function void setColor(boolean b) {
+      let color = b;
+      return;
+    }
+
+    /** Draws the (x,y) pixel, using the current color. */
+    function void drawPixel(int x, int y) {
+      var int baseAddress, ramAddress, loc, index, value;
+      var Array powersOfTwo;
+      let baseAddress = 16384;
+      
+      let loc = ((y * 32) + (x / 16));
+      let ramAddress = loc + baseAddress;
+      let index = x - ((x/16) * 16); 
+      let powersOfTwo = Math.getPowersOfTwo();
+      
+      let value = Memory.peek(ramAddress);
+      let value = value | powersOfTwo[index];
+      if (color = true) {
+        do Memory.poke(ramAddress, value);
+      }
+      else {
+        let value = value & ~powersOfTwo[index];
+        do Memory.poke(ramAddress, value);
+      }
+
+      return;
+    }
+
+    /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
+    function void drawLine(int x1, int y1, int x2, int y2) {
+      var int x, y, dx, dy, absDx, absDy; 
+      var int s1, s2, s32, a, b, diff, count;
+      var int baseAddress, ramAddress, ramAddress2, peek_value, peek_value2;
+      var int bit_value, bit_value2, final_value, loc, loc2;
+      var int index, index2, temp;
+      var Array powersOfTwo;
+      
+      do Output.printInt(~32767 / 2);
+      do Output.println();
+
+      let x = x1;
+      let y = y1;
+      let dx = x2 - x1;
+      let dy = y2 - y1;
+      let absDy = Math.abs(dy);
+      let absDx = Math.abs(dx);
+      let a = 0;
+      let b = 0;
+      let diff = 0;
+      let count = 0;
+
+      let baseAddress = 16384;
+      let loc = ((y * 32) + (x / 16));
+      let loc2 = ((y2 * 32) + (x2 / 16));
+      let ramAddress = loc + baseAddress;
+      let ramAddress2 = loc2 + baseAddress;
+      let index = x - ((x/16) * 16); 
+      let index2 = x2 - ((x2/16) * 16);
+      let powersOfTwo = Math.getPowersOfTwo();
+      if (color = true){
+        let bit_value = powersOfTwo[index];
+        let bit_value2 = powersOfTwo[index2]; 
+      }
+      else {
+        let bit_value = ~powersOfTwo[index];
+        let bit_value2 = powersOfTwo[index2]; 
+      }
+      let peek_value = Memory.peek(ramAddress);
+
+      if (dx > 0) {
+        let s1 = 1;
+      }
+      else {
+        let s1 = -1;
+      }
+
+      if (dy > 0) {
+        let s2 = 1;
+        let s32 = 32;
+      }
+      else {
+        let s2 = -1;
+        let s32 = -32;
+      }
+
+      // DRAW BLACK LINE
+      if (color = true) {
+        if ((dx = 0) | (dy = 0)) {
+          if (dx = 0) {
+            while (Math.abs(count) < Math.abs(ramAddress2 - ramAddress)) {
+              let peek_value =  Memory.peek(ramAddress + count);
+              do Memory.poke(ramAddress + count, bit_value | peek_value);
+              let count = count + s32;
+            }
+          }
+          else {
+            if ((ramAddress2 - ramAddress) = 0) {
+              if (bit_value > bit_value2) {
+                let temp = bit_value2;
+                let bit_value2 = bit_value;
+                let bit_value = temp;
+              }
+              let peek_value = Memory.peek(ramAddress);
+              do Memory.poke(ramAddress, ((bit_value2 * 2) - bit_value) | peek_value);
+            }
+            else {
+
+              do Memory.poke(ramAddress, -bit_value | peek_value);
+              let count = count + s1;
+
+              while (Math.abs(count) < Math.abs(ramAddress2 - ramAddress)) {
+                do Memory.poke(ramAddress + count, -1);
+                let count = count + s1;
+              }
+
+              let peek_value2 = Memory.peek(ramAddress2);
+              do Memory.poke(ramAddress2, ((bit_value2 * 2) - 1) | peek_value2);
+            }
+          }
+        }
+
+        else {
+          while (~(ramAddress = ramAddress2)) {
+            let peek_value = Memory.peek(ramAddress);
+            do Memory.poke(ramAddress, bit_value | peek_value);
+            if (diff < 0) {
+              if ((bit_value = ~32767) & (s1 = 1)) {
+                let bit_value = 1;
+                let ramAddress = ramAddress + s1;
+              }
+              if ((bit_value = 1) & (s1 = -1)) {
+                let bit_value = ~32767; 
+                let ramAddress = ramAddress + s1;
+              }
+              if ((s1 = 1) & ~(bit_value = ~32767)) {
+                let bit_value = bit_value + bit_value;
+              }
+              if ((s1 = -1) & ~(bit_value = 1)) {
+                if (bit_value = ~32767) {
+                  let bit_value = 16384;
+                }
+                else {
+                  let bit_value = bit_value / 2;
+                }
+              }
+              let diff = diff + absDy;
+            }
+            else {
+              let ramAddress = ramAddress + s32;
+              let diff = diff - absDx;
+            }
+          }
+        }
+      }
+
+      // DRAW WHITE LINE
+      return;
+    }
+
+    /** Draws a filled rectangle whose top left corner is (x1, y1)
+     *  and bottom right corner is (x2,y2), using the current color. */
+    function void drawRectangle(int x1, int y1, int x2, int y2) {
+      var int baseAddress, loc, loc2, ramAddress, ramAddress2, bit_value, bit_value2;
+      var int index, index2, column_number, peek_value, peek_value2, count;
+      var Array powersOfTwo;
+
+      let baseAddress = 16384;
+      let loc = ((y1 * 32) + (x1 / 16));
+      let loc2 = ((y1 * 32) + (x2 / 16));
+      let ramAddress = loc + baseAddress;
+      let ramAddress2 = loc2 + baseAddress;
+      let index = x1 - ((x1/16) * 16); 
+      let index2 = x2 - ((x2/16) * 16); 
+      let powersOfTwo = Math.getPowersOfTwo();
+      let bit_value = powersOfTwo[index];
+      let bit_value2 = powersOfTwo[index2];
+      let column_number = y1;
+      let count = 1;
+
+
+      if (color = true) {
+        while (column_number < (y2 + 1)) {
+          let peek_value = Memory.peek(ramAddress);
+          do Memory.poke(ramAddress, -bit_value | peek_value);
+
+          while (Math.abs(count) < Math.abs(ramAddress2 - ramAddress)) {
+            do Memory.poke(ramAddress + count, -1);
+            let count = count + 1;
+          }
+
+          let peek_value2 = Memory.peek(ramAddress2);
+          do Memory.poke(ramAddress2, ((bit_value2 * 2) - 1) | peek_value2);
+          let ramAddress = ramAddress + 32;
+          let ramAddress2 = ramAddress2 + 32;
+          let column_number = column_number + 1;
+          let count = 1;
+        }
+      }
+
+      else {
+        let bit_value = ~bit_value;
+        let bit_value2 = ~bit_value2;
+        while (column_number < (y2 + 1)) {
+          let peek_value = Memory.peek(ramAddress);
+          do Memory.poke(ramAddress, ((-bit_value) - 2) & peek_value);
+
+          while (Math.abs(count) < Math.abs(ramAddress2 - ramAddress)) {
+            do Memory.poke(ramAddress + count, 0);
+            let count = count + 1;
+          }
+
+          let peek_value2 = Memory.peek(ramAddress2);
+          do Memory.poke(ramAddress2, ((bit_value2 * 2) + 2) & peek_value2);
+          let ramAddress = ramAddress + 32;
+          let ramAddress2 = ramAddress2 + 32;
+          let column_number = column_number + 1;
+          let count = 1;
+        }
+      }
+
+      return;
+    }
+
+    /** Draws a filled circle of radius r<=181 around (x,y), using the current color. */
+    function void drawCircle(int x, int y, int r) {
+      var int dy, term;
+      let dy = r;
+
+      while (~(dy = -r)) {
+        let term = Math.abs((r*r) - (dy*dy));
+        do Screen.drawLine(x - Math.sqrt(term), y + dy, x + Math.sqrt(term), y + dy);
+        let dy = dy - 1;
+      }
+      return;
+    }
+
+    function void drawCircleOutline(int x, int y, int r) {
+      var int dy;
+      let dy = r;
+
+      while (~(dy = -r)) {
+        do Screen.drawPixel((x - Math.sqrt((r*r) - (dy*dy))), y + dy);
+        do Screen.drawPixel((x + Math.sqrt((r*r) - (dy*dy))), y + dy);
+        let dy = dy - 1;
+      }
+      return;
+    }
+}
