@@ -101,6 +101,9 @@ class Math {
       while (exit = 1) {
         let result = (upper + lower) / 2;
         let squr = result * result;
+        if (squr = x) {
+          let exit = 0;
+        }
         if (~(squr > x) & ~((upper - result) > 1)) {
           let exit = 0;
         }
@@ -176,5 +179,9 @@ class Math {
 
     function int getRemainder() {
       return remainder;
+    }
+
+    function Array getPowersOfTwo() {
+      return powersOfTwo;
     }
 }

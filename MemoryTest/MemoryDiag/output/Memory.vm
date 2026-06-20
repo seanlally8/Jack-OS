@@ -58,13 +58,13 @@ function Memory.alloc 7
 	pop local 1
 	push static 0
 	pop local 4
-label L9
+label L5
 	push local 3
 	push constant 0
 	eq
 	not
 	not
-	if-goto L10
+	if-goto L6
 	push local 3
 	push constant 0
 	add
@@ -84,7 +84,7 @@ label L9
 	lt
 	and
 	not
-	if-goto L11
+	if-goto L7
 	push local 4
 	pop local 6
 	push local 3
@@ -95,9 +95,9 @@ label L9
 	pop pointer 1
 	push that 0
 	pop local 1
-	goto L12
-label L11
-label L12
+	goto L8
+label L7
+label L8
 	push local 3
 	pop local 4
 	push local 3
@@ -106,8 +106,8 @@ label L12
 	pop pointer 1
 	push that 0
 	pop local 3
-	goto L9
-label L10
+	goto L5
+label L6
 	push local 5
 	push local 5
 	push constant 0
@@ -150,7 +150,7 @@ label L10
 function Memory.deAlloc 1
 	push static 0
 	pop local 0
-label L13
+label L9
 	push local 0
 	push constant 1
 	add
@@ -160,15 +160,15 @@ label L13
 	eq
 	not
 	not
-	if-goto L14
+	if-goto L10
 	push local 0
 	push constant 1
 	add
 	pop pointer 1
 	push that 0
 	pop local 0
-	goto L13
-label L14
+	goto L9
+label L10
 	push local 0
 	push constant 1
 	add

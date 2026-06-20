@@ -8,13 +8,13 @@ function Screen.init 0
 function Screen.clearScreen 1
 	push constant 16384
 	pop local 0
-label L1
+label L39
 	push local 0
 	push constant 24575
 	gt
 	not
 	not
-	if-goto L2
+	if-goto L40
 	push local 0
 	push constant 0
 	call Memory.poke 2
@@ -23,8 +23,8 @@ label L1
 	push constant 1
 	add
 	pop local 0
-	goto L1
-label L2
+	goto L39
+label L40
 	push constant 0
 	return
 function Screen.setColor 0
@@ -34,10 +34,6 @@ function Screen.setColor 0
 	return
 function Screen.drawPixel 6
 	push constant 16384
-	pop local 4
-	push constant 0
-	pop local 2
-	push constant 1
 	pop local 3
 	push argument 1
 	push constant 32
@@ -55,67 +51,59 @@ function Screen.drawPixel 6
 	call Math.multiply 2
 	sub
 	pop local 1
+	call Math.getPowersOfTwo 0
+	pop local 5
 	push local 1
 	push constant 15
 	eq
 	not
-	if-goto L3
+	if-goto L41
 	push constant 32767
 	not
-	pop local 3
-	goto L4
-label L3
-label L5
-	push local 2
-	push local 1
-	lt
-	not
-	if-goto L6
-	push local 3
-	push constant 2
-	call Math.multiply 2
-	pop local 3
-	push local 2
-	push constant 1
-	add
 	pop local 2
-	goto L5
-label L6
-label L4
-	push local 4
+	goto L42
+label L41
+	push local 5
+	push local 1
+	add
+	pop pointer 1
+	push that 0
+	pop local 2
+label L42
+	push local 3
 	push local 0
 	add
 	call Memory.peek 1
-	pop local 5
+	pop local 4
 	push static 0
 	push constant 1
 	neg
 	eq
 	not
-	if-goto L7
-	push local 4
+	if-goto L43
+	push local 3
 	push local 0
 	add
-	push local 3
-	push local 5
+	push local 2
+	push local 4
 	or
 	call Memory.poke 2
 	pop temp 0
-	goto L8
-label L7
-	push local 4
+	goto L44
+label L43
+	push local 3
 	push local 0
 	add
-	push local 3
+	push local 2
 	not
-	push local 5
+	push local 4
 	and
 	call Memory.poke 2
 	pop temp 0
-label L8
+label L44
 	push constant 0
 	return
-function Screen.drawLine 10
+function Screen.drawLine 19
 	push argument 0
 	pop local 0
 	push argument 1
@@ -135,13 +123,81 @@ function Screen.drawLine 10
 	call Math.abs 1
 	pop local 5
 	push constant 0
-	pop local 6
-	push constant 0
 	pop local 7
 	push constant 0
 	pop local 8
 	push constant 0
+	pop local 6
+	push constant 0
 	pop local 9
+	push constant 16384
+	pop local 11
+	push local 2
+	push constant 0
+	gt
+	not
+	if-goto L45
+	push constant 1
+	pop local 15
+	goto L46
+label L45
+	push constant 1
+	neg
+	pop local 15
+label L46
+	push local 3
+	push constant 0
+	gt
+	not
+	if-goto L47
+	push constant 1
+	pop local 16
+	push constant 32
+	pop local 17
+	goto L48
+label L47
+	push constant 1
+	neg
+	pop local 16
+	push constant 32
+	neg
+	pop local 17
+label L48
+	push local 1
+	push constant 32
+	call Math.multiply 2
+	push local 0
+	push constant 16
+	call Math.divide 2
+	add
+	pop local 10
+	push local 0
+	push local 0
+	push constant 16
+	call Math.divide 2
+	push constant 16
+	call Math.multiply 2
+	sub
+	pop local 14
+	call Math.getPowersOfTwo 0
+	pop local 18
+	push local 14
+	push constant 15
+	eq
+	not
+	if-goto L49
+	push constant 32767
+	not
+	pop local 13
+	goto L50
+label L49
+	push local 18
+	push local 14
+	add
+	pop pointer 1
+	push that 0
+	pop local 13
+label L50
 	push local 2
 	push constant 0
 	eq
@@ -150,230 +206,184 @@ function Screen.drawLine 10
 	eq
 	or
 	not
-	if-goto L9
+	if-goto L51
 	push local 2
 	push constant 0
 	eq
-	push local 3
-	push constant 0
-	gt
-	and
 	not
-	if-goto L11
-label L13
+	if-goto L53
+label L55
 	push local 9
 	push local 5
 	lt
 	not
-	if-goto L14
-	push local 0
-	push local 1
-	push local 9
+	if-goto L56
+	push local 11
+	push local 10
 	add
-	call Screen.drawPixel 2
+	call Memory.peek 1
+	pop local 12
+	push static 0
+	push constant 1
+	neg
+	eq
+	not
+	if-goto L57
+	push local 11
+	push local 10
+	add
+	push local 13
+	push local 12
+	or
+	call Memory.poke 2
 	pop temp 0
+	goto L58
+label L57
+	push local 11
+	push local 10
+	add
+	push local 13
+	not
+	push local 12
+	and
+	call Memory.poke 2
+	pop temp 0
+label L58
+	push local 10
+	push local 17
+	add
+	pop local 10
 	push local 9
 	push constant 1
 	add
 	pop local 9
-	goto L13
-label L14
-	goto L12
-label L11
-label L12
-	push local 2
-	push constant 0
-	eq
+	goto L55
+label L56
+	goto L54
+label L53
+label L54
 	push local 3
 	push constant 0
-	lt
-	and
+	eq
 	not
-	if-goto L15
-label L17
+	if-goto L59
+label L61
 	push local 9
+	push local 4
+	lt
+	not
+	if-goto L62
+	push local 11
+	push local 10
+	add
+	call Memory.peek 1
+	pop local 12
+	push static 0
+	push constant 1
+	neg
+	eq
+	not
+	if-goto L63
+	push local 11
+	push local 10
+	add
+	push local 13
+	push local 12
+	or
+	call Memory.poke 2
+	pop temp 0
+	goto L64
+label L63
+	push local 11
+	push local 10
+	add
+	push local 13
+	not
+	push local 12
+	and
+	call Memory.poke 2
+	pop temp 0
+label L64
+	push local 15
+	push constant 1
+	eq
+	not
+	if-goto L65
+	push local 13
+	push constant 32767
+	not
+	eq
+	not
+	if-goto L67
+	push constant 1
+	pop local 13
+	push local 10
+	push local 15
+	add
+	pop local 10
+	goto L68
+label L67
+	push local 13
+	push local 13
+	add
+	pop local 13
+label L68
+	goto L66
+label L65
+label L66
+	push local 15
+	push constant 1
+	neg
+	eq
+	not
+	if-goto L69
+	push local 13
+	push constant 1
+	eq
+	not
+	if-goto L71
+	push constant 32767
+	not
+	pop local 13
+	push local 10
+	push local 15
+	add
+	pop local 10
+	goto L72
+label L71
+	push local 13
+	push constant 2
+	call Math.divide 2
+	pop local 13
+label L72
+	goto L70
+label L69
+label L70
+	push local 9
+	push constant 1
+	add
+	pop local 9
+	goto L61
+label L62
+	goto L60
+label L59
+label L60
+	goto L52
+label L51
+label L73
+	push local 7
+	call Math.abs 1
+	push local 4
+	gt
+	not
+	push local 8
+	call Math.abs 1
 	push local 5
-	lt
-	not
-	if-goto L18
-	push local 0
-	push local 1
-	push local 9
-	sub
-	call Screen.drawPixel 2
-	pop temp 0
-	push local 9
-	push constant 1
-	add
-	pop local 9
-	goto L17
-label L18
-	goto L16
-label L15
-label L16
-	push local 3
-	push constant 0
-	eq
-	push local 2
-	push constant 0
-	gt
-	and
-	not
-	if-goto L19
-label L21
-	push local 9
-	push local 4
-	lt
-	not
-	if-goto L22
-	push local 0
-	push local 9
-	add
-	push local 1
-	call Screen.drawPixel 2
-	pop temp 0
-	push local 9
-	push constant 1
-	add
-	pop local 9
-	goto L21
-label L22
-	goto L20
-label L19
-label L20
-	push local 3
-	push constant 0
-	eq
-	push local 2
-	push constant 0
-	lt
-	and
-	not
-	if-goto L23
-label L25
-	push local 9
-	push local 4
-	lt
-	not
-	if-goto L26
-	push local 0
-	push local 9
-	sub
-	push local 1
-	call Screen.drawPixel 2
-	pop temp 0
-	push local 9
-	push constant 1
-	add
-	pop local 9
-	goto L25
-label L26
-	goto L24
-label L23
-	push constant 0
-	pop local 9
-label L27
-	push local 9
-	push local 2
-	lt
-	not
-	if-goto L28
-	push local 0
-	push local 9
-	add
-	push local 1
-	call Screen.drawPixel 2
-	pop temp 0
-	push local 9
-	push constant 1
-	add
-	pop local 9
-	goto L27
-label L28
-label L24
-	goto L10
-label L9
-label L29
-	push local 7
-	push local 4
-	gt
-	not
-	push local 8
-	push local 5
 	gt
 	not
 	and
 	not
-	if-goto L30
-	push local 2
-	push constant 0
-	lt
-	push local 3
-	push constant 0
-	lt
-	and
-	not
-	if-goto L31
-	push local 0
-	push local 7
-	sub
-	push local 1
-	push local 8
-	sub
-	call Screen.drawPixel 2
-	pop temp 0
-	goto L32
-label L31
-label L32
-	push local 2
-	push constant 0
-	lt
-	push local 3
-	push constant 0
-	gt
-	and
-	not
-	if-goto L33
-	push local 0
-	push local 7
-	sub
-	push local 1
-	push local 8
-	add
-	call Screen.drawPixel 2
-	pop temp 0
-	goto L34
-label L33
-label L34
-	push local 2
-	push constant 0
-	gt
-	push local 3
-	push constant 0
-	lt
-	and
-	not
-	if-goto L35
-	push local 0
-	push local 7
-	add
-	push local 1
-	push local 8
-	sub
-	call Screen.drawPixel 2
-	pop temp 0
-	goto L36
-label L35
-label L36
-	push local 2
-	push constant 0
-	gt
-	push local 3
-	push constant 0
-	gt
-	and
-	not
-	if-goto L37
+	if-goto L74
 	push local 0
 	push local 7
 	add
@@ -382,46 +392,43 @@ label L36
 	add
 	call Screen.drawPixel 2
 	pop temp 0
-	goto L38
-label L37
-label L38
 	push local 6
 	push constant 0
 	lt
 	not
-	if-goto L39
+	if-goto L75
 	push local 7
-	push constant 1
+	push local 15
 	add
 	pop local 7
 	push local 6
 	push local 5
 	add
 	pop local 6
-	goto L40
-label L39
+	goto L76
+label L75
 	push local 8
-	push constant 1
+	push local 16
 	add
 	pop local 8
 	push local 6
 	push local 4
 	sub
 	pop local 6
-label L40
-	goto L29
-label L30
-label L10
+label L76
+	goto L73
+label L74
+label L52
 	push constant 0
 	return
 function Screen.drawRectangle 0
-label L41
+label L77
 	push argument 1
 	push argument 3
 	eq
 	not
 	not
-	if-goto L42
+	if-goto L78
 	push argument 0
 	push argument 1
 	push argument 2
@@ -432,21 +439,21 @@ label L41
 	push constant 1
 	add
 	pop argument 1
-	goto L41
-label L42
+	goto L77
+label L78
 	push constant 0
 	return
 function Screen.drawCircle 1
 	push argument 2
 	pop local 0
-label L43
+label L79
 	push local 0
 	push argument 2
 	neg
 	eq
 	not
 	not
-	if-goto L44
+	if-goto L80
 	push argument 0
 	push argument 2
 	push argument 2
@@ -479,21 +486,21 @@ label L43
 	push constant 1
 	sub
 	pop local 0
-	goto L43
-label L44
+	goto L79
+label L80
 	push constant 0
 	return
 function Screen.drawCircleOutline 1
 	push argument 2
 	pop local 0
-label L45
+label L81
 	push local 0
 	push argument 2
 	neg
 	eq
 	not
 	not
-	if-goto L46
+	if-goto L82
 	push argument 0
 	push argument 2
 	push argument 2
@@ -528,7 +535,7 @@ label L45
 	push constant 1
 	sub
 	pop local 0
-	goto L45
-label L46
+	goto L81
+label L82
 	push constant 0
 	return

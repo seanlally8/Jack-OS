@@ -17,9 +17,9 @@ class Memory {
     function void init() {
       let heapBase = 2048;
       let freeList = heapBase;
-      let heapSize = 14334;
-      let freeList[0] = heapSize;
-      let freeList[1] = 0;
+      let heapSize = 14335;
+      let heapBase[0] = 0;
+      let heapBase[1] = 14335;
       return;
     }
 

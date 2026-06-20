@@ -4,7 +4,7 @@
 // File name: projects/12/MemoryTest/MemoryDiag/MemoryDiag.tst
 
 echo "At the end of this test it is normal to see some pixels set on the screen";
-load,
+load /output/Main.vm,
 output-file MemoryDiag.out,
 compare-to MemoryDiag.cmp,
 output-list RAM[17000]%D2.6.1 RAM[17001]%D2.6.1 RAM[17002]%D2.6.1

@@ -38,29 +38,22 @@ class Screen {
 
     /** Draws the (x,y) pixel, using the current color. */
     function void drawPixel(int x, int y) {
-      var int loc, index, count, bit, memoryAddress, check;
+      var int loc, index, bit, memoryAddress, check;
+      var Array powersOfTwo;
       let memoryAddress = 16384;
-      let count = 0;
-      let bit = 1;
       
       let loc = ((y * 32) + (x / 16));
       let index = x - ((x/16) * 16); 
+      let powersOfTwo = Math.getPowersOfTwo();
 
-      if (index = 15) {
-        let bit = ~32767;
-      }
-      else {
-        while (count < index) {
-          let bit = bit * 2;
-          let count = count + 1;
-        }
-      }
+      let bit = powersOfTwo[index];
+
       let check = Memory.peek(memoryAddress + loc); 
       if (color = true) {
         do Memory.poke(memoryAddress + loc, bit | check);
       }
       else {
-        do Memory.poke(memoryAddress + loc, ~bit & check);
+        do Memory.poke(memoryAddress + loc, (~bit) & check);
       }
       return;
     }
@@ -68,6 +61,10 @@ class Screen {
     /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
     function void drawLine(int x1, int y1, int x2, int y2) {
       var int x, y, dx, dy, absDx, absDy, diff, a, b, count;
+      var int loc, memoryAddress, check, bit, index;
+      var int s1, s2;
+      var Array powersOfTwo;
+
       let x = x1;
       let y = y1;
       let dx = x2 - x1;
@@ -80,59 +77,42 @@ class Screen {
       let b = 0;
       let count = 0;
 
+      if (dx > 0) {
+        let s1 = 1;
+      }
+      else {
+        let s1 = -1;
+      }
+      if (dy > 0) {
+        let s2 = 1;
+      }
+      else {
+        let s2 = -1;
+      }
+
       if ((dx = 0) | (dy = 0)) {
-        if ((dx = 0) & (dy > 0)) {
-          while (count < absDy) {
+        if (dx = 0) {
+          while (Math.abs(count) < absDy) {
             do Screen.drawPixel(x, y + count);
-            let count = count + 1;
+            let count = count + s2;
           }
         }
-        if ((dx = 0) & (dy < 0)) {
-          while (count < absDy) {
-            do Screen.drawPixel(x, y - count);
-            let count = count + 1;
-          }
-        }
-        if ((dy = 0) & (dx > 0)) {
-          while (count < absDx) {
+        if (dy = 0) {
+          while (Math.abs(count) < absDx) {
             do Screen.drawPixel(x + count, y);
-            let count = count + 1;
-          }
-        }
-        if ((dy = 0) & (dx < 0)) {
-          while (count < absDx) {
-            do Screen.drawPixel(x - count, y);
-            let count = count + 1;
-          }
-        }
-        else {
-          let count = 0;
-          while (count < dx) {
-            do Screen.drawPixel(x + count, y);
-            let count = count + 1;
+            let count = count + s1;
           }
         }
       }
       else {
-        while (~(a > absDx) & ~(b > absDy)) {
-          if ((dx < 0) & (dy < 0)) {
-            do Screen.drawPixel(x - a, y - b);
-          }
-          if ((dx < 0) & (dy > 0)) {
-            do Screen.drawPixel(x - a, y + b);
-          }
-          if ((dx > 0) & (dy < 0)) {
-            do Screen.drawPixel(x + a, y - b);
-          }
-          if ((dx > 0) & (dy > 0)) {
-            do Screen.drawPixel(x + a, y + b);
-          }
+        while (~(Math.abs(a) > absDx) & ~(Math.abs(b) > absDy)) {
+          do Screen.drawPixel(x + a, y + b);
           if (diff < 0) {
-            let a = a + 1;
+            let a = a + s1;
             let diff = diff + absDy;
           }
           else {
-            let b = b + 1;
+            let b = b + s2;
             let diff = diff - absDx;
           }
         }
