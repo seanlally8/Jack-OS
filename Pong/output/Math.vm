@@ -8,12 +8,12 @@ function Math.init 2
 	push constant 16
 	call Array.new 1
 	pop static 3
-label L1
+label L65
 	push local 0
 	push constant 16
 	lt
 	not
-	if-goto L2
+	if-goto L66
 	push static 3
 	push local 0
 	add
@@ -30,8 +30,8 @@ label L1
 	push constant 1
 	add
 	pop local 0
-	goto L1
-label L2
+	goto L65
+label L66
 	push constant 0
 	return
 function Math.multiply 5
@@ -43,12 +43,12 @@ function Math.multiply 5
 	pop local 4
 	push argument 0
 	pop local 1
-label L3
+label L67
 	push local 3
 	push constant 16
 	lt
 	not
-	if-goto L4
+	if-goto L68
 	push argument 1
 	push local 3
 	call Math.bit 2
@@ -57,14 +57,14 @@ label L3
 	push constant 1
 	eq
 	not
-	if-goto L5
+	if-goto L69
 	push local 2
 	push local 1
 	add
 	pop local 2
-	goto L6
-label L5
-label L6
+	goto L70
+label L69
+label L70
 	push local 1
 	push local 1
 	add
@@ -73,8 +73,8 @@ label L6
 	push constant 1
 	add
 	pop local 3
-	goto L3
-label L4
+	goto L67
+label L68
 	push local 2
 	return
 function Math.divide 3
@@ -88,14 +88,14 @@ function Math.divide 3
 	push local 0
 	gt
 	not
-	if-goto L7
+	if-goto L71
 	push constant 0
 	pop static 2
 	push constant 0
 	return
-	goto L8
-label L7
-label L8
+	goto L72
+label L71
+label L72
 	push argument 0
 	push argument 1
 	push argument 1
@@ -108,13 +108,13 @@ label L8
 	push local 1
 	lt
 	not
-	if-goto L9
+	if-goto L73
 	push local 2
 	push local 2
 	add
 	return
-	goto L10
-label L9
+	goto L74
+label L73
 	push argument 0
 	push constant 0
 	lt
@@ -131,7 +131,7 @@ label L9
 	and
 	or
 	not
-	if-goto L11
+	if-goto L75
 	push static 2
 	push local 1
 	add
@@ -142,8 +142,8 @@ label L9
 	push constant 1
 	sub
 	return
-	goto L12
-label L11
+	goto L76
+label L75
 	push static 2
 	push local 1
 	add
@@ -154,8 +154,8 @@ label L11
 	push constant 1
 	add
 	return
-label L12
-label L10
+label L76
+label L74
 function Math.sqrt 5
 	push constant 1
 	pop local 0
@@ -165,24 +165,24 @@ function Math.sqrt 5
 	push constant 182
 	gt
 	not
-	if-goto L13
+	if-goto L77
 	push constant 182
 	pop local 1
-	goto L14
-label L13
-label L14
+	goto L78
+label L77
+label L78
 	push constant 0
 	pop local 2
 	push constant 0
 	pop local 3
 	push constant 0
 	pop local 4
-label L15
+label L79
 	push local 0
 	push constant 1
 	eq
 	not
-	if-goto L16
+	if-goto L80
 	push local 1
 	push local 2
 	add
@@ -197,12 +197,12 @@ label L15
 	push argument 0
 	eq
 	not
-	if-goto L17
+	if-goto L81
 	push constant 0
 	pop local 0
-	goto L18
-label L17
-label L18
+	goto L82
+label L81
+label L82
 	push local 4
 	push argument 0
 	gt
@@ -215,22 +215,22 @@ label L18
 	not
 	and
 	not
-	if-goto L19
+	if-goto L83
 	push constant 0
 	pop local 0
-	goto L20
-label L19
-label L20
+	goto L84
+label L83
+label L84
 	push local 4
 	push argument 0
 	gt
 	not
-	if-goto L21
+	if-goto L85
 	push local 3
 	pop local 1
-	goto L22
-label L21
-label L22
+	goto L86
+label L85
+label L86
 	push local 4
 	push argument 0
 	lt
@@ -241,14 +241,14 @@ label L22
 	gt
 	and
 	not
-	if-goto L23
+	if-goto L87
 	push local 3
 	pop local 2
-	goto L24
-label L23
-label L24
-	goto L15
-label L16
+	goto L88
+label L87
+label L88
+	goto L79
+label L80
 	push local 3
 	return
 function Math.max 0
@@ -256,41 +256,41 @@ function Math.max 0
 	push argument 1
 	gt
 	not
-	if-goto L25
+	if-goto L89
 	push argument 0
 	return
-	goto L26
-label L25
+	goto L90
+label L89
 	push argument 1
 	return
-label L26
+label L90
 function Math.min 0
 	push argument 0
 	push argument 1
 	lt
 	not
-	if-goto L27
+	if-goto L91
 	push argument 0
 	return
-	goto L28
-label L27
+	goto L92
+label L91
 	push argument 1
 	return
-label L28
+label L92
 function Math.abs 0
 	push argument 0
 	push constant 0
 	lt
 	not
-	if-goto L29
+	if-goto L93
 	push argument 0
 	neg
 	return
-	goto L30
-label L29
+	goto L94
+label L93
 	push argument 0
 	return
-label L30
+label L94
 function Math.bit 2
 	push static 3
 	push argument 1
@@ -307,14 +307,14 @@ function Math.bit 2
 	eq
 	not
 	not
-	if-goto L31
+	if-goto L95
 	push constant 1
 	return
-	goto L32
-label L31
+	goto L96
+label L95
 	push constant 0
 	return
-label L32
+label L96
 function Math.mod 1
 	push argument 0
 	push argument 1

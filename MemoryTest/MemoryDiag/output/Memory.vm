@@ -1,23 +1,25 @@
 function Memory.init 0
 	push constant 2048
 	pop static 2
-	push static 2
+	push constant 2048
 	pop static 0
-	push constant 14334
+	push constant 14335
+	push constant 2
+	sub
 	pop static 1
-	push static 0
+	push static 2
 	push constant 0
 	add
 	pop temp 1
-	push static 1
+	push constant 0
 	push temp 1
 	pop pointer 1
 	pop that 0
-	push static 0
+	push static 2
 	push constant 1
 	add
 	pop temp 1
-	push constant 0
+	push static 1
 	push temp 1
 	pop pointer 1
 	pop that 0
@@ -45,82 +47,110 @@ function Memory.poke 1
 	pop that 0
 	push constant 0
 	return
-function Memory.alloc 7
-	push constant 0
+function Memory.alloc 4
+	push static 0
 	pop local 0
-	push constant 0
-	pop local 2
-	push static 0
-	pop local 3
-	push static 1
 	push constant 1
-	add
-	pop local 1
-	push static 0
-	pop local 4
+	pop local 2
 label L5
-	push local 3
+	push local 0
 	push constant 0
 	eq
 	not
+	push local 2
+	push constant 1
+	eq
+	and
 	not
 	if-goto L6
-	push local 3
+	push local 0
 	push constant 0
+	add
+	pop pointer 1
+	push that 0
+	push constant 0
+	eq
+	push local 0
+	push constant 1
 	add
 	pop pointer 1
 	push that 0
 	push argument 0
-	push constant 1
-	add
-	lt
-	not
-	push local 3
-	push constant 0
-	add
-	pop pointer 1
-	push that 0
-	push local 1
 	lt
 	and
 	not
 	if-goto L7
-	push local 4
-	pop local 6
-	push local 3
-	pop local 5
-	push local 3
-	push constant 0
-	add
-	pop pointer 1
-	push that 0
-	pop local 1
+	push constant 6
+	call Sys.error 1
+	pop temp 0
 	goto L8
 label L7
 label L8
-	push local 3
-	pop local 4
-	push local 3
+	push local 0
 	push constant 1
 	add
 	pop pointer 1
 	push that 0
+	push argument 0
+	push constant 2
+	add
+	lt
+	not
+	not
+	if-goto L9
+	push local 0
+	push constant 1
+	add
+	pop pointer 1
+	push that 0
+	push argument 0
+	push constant 2
+	sub
+	sub
 	pop local 3
-	goto L5
-label L6
-	push local 5
-	push local 5
+	push local 0
+	push local 3
+	add
+	pop local 1
+	push constant 0
+	pop local 2
+	goto L10
+label L9
+	push local 0
 	push constant 0
 	add
 	pop pointer 1
 	push that 0
+	pop local 0
+label L10
+	goto L5
+label L6
+	push local 0
+	push constant 1
+	add
+	pop temp 1
+	push local 0
+	push constant 1
+	add
+	pop pointer 1
+	push that 0
+	push argument 0
 	push constant 2
 	add
-	push argument 0
 	sub
+	push temp 1
+	pop pointer 1
+	pop that 0
+	push local 1
+	push constant 2
+	neg
 	add
-	pop local 2
-	push local 2
+	pop temp 1
+	push constant 0
+	push temp 1
+	pop pointer 1
+	pop that 0
+	push local 1
 	push constant 1
 	neg
 	add
@@ -129,30 +159,14 @@ label L6
 	push temp 1
 	pop pointer 1
 	pop that 0
-	push local 5
-	push constant 0
-	add
-	pop temp 1
-	push local 5
-	push constant 0
-	add
-	pop pointer 1
-	push that 0
-	push argument 0
-	push constant 1
-	add
-	sub
-	push temp 1
-	pop pointer 1
-	pop that 0
-	push local 2
+	push local 1
 	return
 function Memory.deAlloc 1
 	push static 0
 	pop local 0
-label L9
+label L11
 	push local 0
-	push constant 1
+	push constant 0
 	add
 	pop pointer 1
 	push that 0
@@ -160,33 +174,33 @@ label L9
 	eq
 	not
 	not
-	if-goto L10
+	if-goto L12
 	push local 0
-	push constant 1
+	push constant 0
 	add
 	pop pointer 1
 	push that 0
 	pop local 0
-	goto L9
-label L10
+	goto L11
+label L12
 	push local 0
-	push constant 1
+	push constant 0
 	add
 	pop temp 1
 	push argument 0
-	push constant 1
+	push constant 2
 	sub
 	push temp 1
 	pop pointer 1
 	pop that 0
 	push local 0
-	push constant 1
+	push constant 0
 	add
 	pop pointer 1
 	push that 0
 	pop local 0
 	push local 0
-	push constant 1
+	push constant 0
 	add
 	pop temp 1
 	push constant 0

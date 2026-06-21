@@ -16,10 +16,10 @@ class Memory {
     /** Initializes the class. */
     function void init() {
       let heapBase = 2048;
-      let freeList = heapBase;
-      let heapSize = 14335;
+      let freeList = 2048;
+      let heapSize = 14335 - 2;
       let heapBase[0] = 0;
-      let heapBase[1] = 14335;
+      let heapBase[1] = heapSize;
       return;
     }
 
@@ -41,30 +41,27 @@ class Memory {
     /** Finds an available RAM block of the given size and returns
      *  a reference to its base address. */
     function Array alloc(int size) {
-      var int i, rightSize;
-      var Array block, ptr, prev;
-      var Array rightAddr, prevAddr;
+      var Array ptr, block;
+      var int exit, offset;
 
-      let i = 0;
-      let block = 0;
       let ptr = freeList;
-      let rightSize = heapSize + 1;
-      let prev = freeList;
-
-      while (~(ptr = 0)) {
-        if (~(ptr[0] < (size + 1)) & (ptr[0] < rightSize)) {
-          let prevAddr = prev; 
-          let rightAddr = ptr;
-          let rightSize = ptr[0];
+      let exit = 1;
+      while (~(ptr = 0) & (exit = 1)) {
+        if ((ptr[0] = 0) & (ptr[1] < size)){
+          do Sys.error(6);
         }
-        let prev = ptr;
-        let ptr = ptr[1];
+        if (~(ptr[1] < (size + 2))) {
+          let offset = ptr[1] - (size - 2);
+          let block = ptr + offset;
+          let exit = 0;
+        }
+        else {
+          let ptr = ptr[0];
+        }
       }
-
-      let block = rightAddr + ((rightAddr[0] + 2) - size);
+      let ptr[1] = ptr[1] - (size + 2);
+      let block[-2] = 0;
       let block[-1] = size;
-      let rightAddr[0] = rightAddr[0] - (size + 1);  
-
       return block;
     }
 
@@ -73,12 +70,12 @@ class Memory {
     function void deAlloc(Array o) {
       var Array ptr;
       let ptr = freeList;
-      while (~(ptr[1] = 0)) {
-        let ptr = ptr[1];
+      while (~(ptr[0] = 0)) {
+        let ptr = ptr[0];
       }
-      let ptr[1] = o - 1;
-      let ptr = ptr[1];
-      let ptr[1] = 0;
+      let ptr[0] = o - 2;
+      let ptr = ptr[0];
+      let ptr[0] = 0;
       return;
     }    
 }

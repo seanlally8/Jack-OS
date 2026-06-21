@@ -61,8 +61,8 @@ class Screen {
     /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
     function void drawLine(int x1, int y1, int x2, int y2) {
       var int x, y, dx, dy, absDx, absDy, diff, a, b, count;
-      var int loc, memoryAddress, check, bit, index;
-      var int s1, s2;
+      var int loc, loc2, memoryAddress, check, bit, bit2, index, index2;
+      var int s1, s2, mask;
       var Array powersOfTwo;
 
       let x = x1;
@@ -76,6 +76,16 @@ class Screen {
       let a = 0;
       let b = 0;
       let count = 0;
+
+      // Prepping horizontal line drawing
+      let memoryAddress = 16384;
+      let loc = ((y * 32) + (x / 16));
+      let loc2 = ((y2 * 32) + (x2 / 16));
+      let index = x - ((x/16) * 16); 
+      let index2 = x2 - ((x2/16) * 16); 
+      let powersOfTwo = Math.getPowersOfTwo();
+      let bit = powersOfTwo[index];
+      let bit2 = powersOfTwo[index2];
 
       if (dx > 0) {
         let s1 = 1;
@@ -98,9 +108,72 @@ class Screen {
           }
         }
         if (dy = 0) {
-          while (Math.abs(count) < absDx) {
-            do Screen.drawPixel(x + count, y);
-            let count = count + s1;
+          if ((loc2 - loc) = 0) {
+            let check = Memory.peek(memoryAddress + loc);
+            if (s1 = 1) {
+              let mask = (bit2 + bit2) - bit;
+              if (color = true){
+                do Memory.poke(memoryAddress + loc, mask | check);
+              }
+              else {
+                do Memory.poke(memoryAddress + loc, ~mask & check);
+              }
+            }
+            if (s1 = -1) {
+              let mask = (bit + bit) - bit2;
+              if (color = true) {
+                do Memory.poke(memoryAddress + loc, mask | check);
+              }
+              else {
+                do Memory.poke(memoryAddress + loc, ~mask & check);
+              }
+            }
+          } 
+
+          else {
+
+            if (s1 = 1) {
+              if (bit > 0) {
+                let bit = -bit;
+              }
+              let bit2 = (bit2 + Math.abs(bit2)) - 1;
+            }
+            if (s1 = -1) {
+              let bit = (bit + Math.abs(bit)) - 1;
+              if (bit2 > 0) {
+                let bit2 = -bit2;
+              }
+            }
+
+            let check = Memory.peek(memoryAddress + loc);
+
+            if (color = true) {
+              do Memory.poke(memoryAddress + loc, bit | check);
+            }
+            else {
+              do Memory.poke(memoryAddress + loc, ~bit & check);
+            }
+
+            let loc = loc + s1;
+
+            while (~(loc = loc2)) {
+              if (color = true) {
+                do Memory.poke(memoryAddress + loc, -1);
+              }
+              else {
+                do Memory.poke(memoryAddress + loc, 0);
+              }
+              let loc = loc + s1;
+            }
+
+            let check = Memory.peek(memoryAddress + loc2);
+
+            if (color = true) {
+              do Memory.poke(memoryAddress + loc2, bit2 | check);
+            }
+            else {
+              do Memory.poke(memoryAddress + loc2, ~bit2 & check);
+            }
           }
         }
       }
@@ -124,9 +197,11 @@ class Screen {
      *  and bottom right corner is (x2,y2), using the current color. */
     function void drawRectangle(int x1, int y1, int x2, int y2) {
 
-      while (~(y1 = y2)) {
+      while (~(y1 > y2)) {
         do Screen.drawLine(x1, y1, x2, y1);
+        do Screen.drawLine(x1, y2, x2, y2);
         let y1 = y1 + 1;
+        let y2 = y2 - 1;
       }
       return;
     }
